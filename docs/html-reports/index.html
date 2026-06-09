@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Sage — HTML Reports Archive</title>
+<style>
+  /* ── CSS vars — identical to all Market Sage reports ── */
+  :root {
+    --navy:      #0f2744;
+    --navy-mid:  #1e3a5f;
+    --blue:      #1d4ed8;
+    --slate:     #334155;
+    --slate-lt:  #475569;
+    --bg:        #f1f5f9;
+    --bg-card:   #ffffff;
+    --border:    #cbd5e1;
+    --text:      #0f172a;
+    --text-muted:#64748b;
+    --buy:       #15803d;
+    --buy-bg:    #dcfce7;
+    --build:     #0369a1;
+    --build-bg:  #e0f2fe;
+    --hold:      #1e40af;
+    --hold-bg:   #dbeafe;
+    --trim:      #c2410c;
+    --trim-bg:   #ffedd5;
+    --watch:     #92400e;
+    --watch-bg:  #fef3c7;
+    --exclude:   #991b1b;
+    --exclude-bg:#fee2e2;
+    --pos:       #15803d;
+    --neg:       #b91c1c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* ── BACK LINK ── */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #93c5fd;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 12px;
+    opacity: 0.85;
+    transition: opacity 0.15s;
+  }
+  .back-link:hover { opacity: 1; text-decoration: underline; }
+  .back-link::before { content: '←'; font-size: 14px; }
+
+  /* ── HEADER — same gradient as all reports ── */
+  .report-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    color: #fff;
+    padding: 28px 40px 24px;
+    border-bottom: 4px solid #3b82f6;
+  }
+  .report-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+  }
+  .report-header .subtitle {
+    font-size: 13px;
+    color: #93c5fd;
+    margin-bottom: 16px;
+  }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 16px; }
+  .meta-item { display: flex; flex-direction: column; gap: 2px; }
+  .meta-item .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: #93c5fd; }
+  .meta-item .value { font-size: 15px; font-weight: 700; color: #fff; }
+
+  /* ── STATS STRIP — same dark bar as reports ── */
+  .stats-strip {
+    display: flex;
+    flex-wrap: wrap;
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+  }
+  .stat-box {
+    flex: 1;
+    min-width: 120px;
+    padding: 12px 20px;
+    border-right: 1px solid #334155;
+    text-align: center;
+  }
+  .stat-box:last-child { border-right: none; }
+  .stat-box .s-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.7px; color: #64748b; }
+  .stat-box .s-val   { font-size: 16px; font-weight: 700; margin-top: 2px; }
+  .s-green { color: #4ade80; }
+  .s-amber { color: #fbbf24; }
+  .s-red   { color: #f87171; }
+  .s-blue  { color: #60a5fa; }
+  .s-white { color: #f8fafc; }
+
+  /* ── CONTENT ── */
+  .content { padding: 28px 40px; max-width: 1400px; margin: 0 auto; }
+
+  /* ── BADGES — same as all reports ── */
+  .badge {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .badge-buy      { background: var(--buy-bg);     color: var(--buy);     border: 1px solid #86efac; }
+  .badge-build    { background: var(--build-bg);   color: var(--build);   border: 1px solid #7dd3fc; }
+  .badge-hold     { background: var(--hold-bg);    color: var(--hold);    border: 1px solid #93c5fd; }
+  .badge-trim     { background: var(--trim-bg);    color: var(--trim);    border: 1px solid #fdba74; }
+  .badge-watch    { background: var(--watch-bg);   color: var(--watch);   border: 1px solid #fcd34d; }
+  .badge-exclude  { background: var(--exclude-bg); color: var(--exclude); border: 1px solid #fca5a5; }
+  /* ── category badges ── */
+  .badge-action-plan  { background: var(--build-bg); color: var(--build);  border: 1px solid #7dd3fc; }
+  .badge-portfolio    { background: var(--hold-bg);  color: var(--hold);   border: 1px solid #93c5fd; }
+  .badge-sector       { background: #ede9fe;          color: #6d28d9;       border: 1px solid #c4b5fd; }
+  .badge-macro        { background: var(--watch-bg); color: var(--watch);  border: 1px solid #fcd34d; }
+  .badge-watchlist    { background: var(--trim-bg);  color: var(--trim);   border: 1px solid #fdba74; }
+  .badge-analysis     { background: #f0f9ff;          color: #0c4a6e;       border: 1px solid #bae6fd; }
+
+  /* ── P&L colours ── */
+  .pos { color: var(--pos); font-weight: 600; }
+  .neg { color: var(--neg); font-weight: 600; }
+
+  /* ── YEAR BAND — navy bar like section header ── */
+  .year-band {
+    background: linear-gradient(90deg, var(--navy) 0%, var(--navy-mid) 100%);
+    color: #fff;
+    padding: 9px 18px;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.4px;
+    margin: 6px 0 18px;
+    border-left: 4px solid #3b82f6;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .year-band .yb-count {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 500;
+    color: #93c5fd;
+  }
+
+  /* ── MONTH HEADER ── */
+  .month-header {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--slate);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 10px 0 8px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .month-header .mh-count {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-left: auto;
+  }
+
+  /* ── REPORT CARD ── */
+  .report-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--blue);
+    border-radius: 0 10px 10px 0;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    transition: box-shadow 0.18s ease, border-left-color 0.18s ease;
+  }
+  .report-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    border-left-color: #3b82f6;
+  }
+  .rc-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .rc-date {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+  }
+  .rc-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 8px;
+    letter-spacing: 0.2px;
+  }
+  .rc-title a {
+    color: var(--navy);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .rc-title a:hover { color: var(--blue); }
+  .rc-desc {
+    font-size: 12.5px;
+    color: var(--slate-lt);
+    line-height: 1.65;
+    margin-bottom: 12px;
+  }
+
+  /* ── TICKERS ── */
+  .tickers-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+  .ticker-pill {
+    background: #f1f5f9;
+    color: var(--slate);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    white-space: nowrap;
+  }
+  .ticker-pill.more {
+    background: transparent;
+    color: var(--text-muted);
+    border-style: dashed;
+    font-weight: 500;
+    font-family: inherit;
+  }
+
+  /* ── CARD STATS ROW ── */
+  .card-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-top: 12px;
+    border-top: 1px solid #e2e8f0;
+  }
+  .cs-item { display: flex; flex-direction: column; gap: 1px; }
+  .cs-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.7px; color: var(--text-muted); font-weight: 500; }
+  .cs-val   { font-size: 13px; font-weight: 700; color: var(--navy); }
+
+  /* ── VIEW BUTTON ── */
+  .rc-view-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--navy);
+    color: #fff;
+    padding: 7px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 14px;
+    transition: background 0.15s ease;
+    letter-spacing: 0.2px;
+  }
+  .rc-view-btn:hover { background: #1e3a5f; }
+  .rc-view-btn::after { content: '→'; margin-left: 2px; }
+
+  /* ── FOOTER ── */
+  .report-footer {
+    background: var(--navy);
+    color: #94a3b8;
+    padding: 20px 40px;
+    font-size: 11px;
+    line-height: 1.7;
+    margin-top: 20px;
+  }
+  .report-footer strong { color: #cbd5e1; }
+  .disclaimer-title { color: #e2e8f0; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .report-header { padding: 20px 20px 18px; }
+    .content { padding: 20px 16px; }
+    .report-footer { padding: 16px 20px; }
+    .rc-title { font-size: 15px; }
+    .card-stats { gap: 14px; }
+  }
+
+  @media print {
+    body { background: #fff; font-size: 11px; }
+    .report-header,
+    .stats-strip,
+    .year-band {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .report-card { box-shadow: none; border: 1px solid #cbd5e1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ HEADER ═══ -->
+<header class="report-header">
+  <a class="back-link" href="../">Markdown Site</a>
+  <h1>Market Sage — HTML Reports Archive</h1>
+  <div class="subtitle">Full-fidelity analysis reports with complete visual formatting · Indian Markets · Zerodha Kite Portfolio</div>
+  <div class="meta-row">
+    <div class="meta-item"><span class="label">Total Reports</span><span class="value">1</span></div>
+    <div class="meta-item"><span class="label">Latest</span><span class="value">9 June 2026</span></div>
+    <div class="meta-item"><span class="label">Archive Since</span><span class="value">June 2026</span></div>
+    <div class="meta-item"><span class="label">Powered By</span><span class="value">Market Sage</span></div>
+    <div class="meta-item"><span class="label">Data Source</span><span class="value">Live · NSE / Screener.in</span></div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════ STATS ═══ -->
+<div class="stats-strip">
+  <div class="stat-box"><div class="s-label">HTML Reports</div><div class="s-val s-white">1</div></div>
+  <div class="stat-box"><div class="s-label">Action Plans</div><div class="s-val s-blue">1</div></div>
+  <div class="stat-box"><div class="s-label">Portfolio Reviews</div><div class="s-val s-white">0</div></div>
+  <div class="stat-box"><div class="s-label">Sector Analysis</div><div class="s-val s-white">0</div></div>
+  <div class="stat-box"><div class="s-label">Macro / Watchlist</div><div class="s-val s-white">0</div></div>
+  <div class="stat-box"><div class="s-label">Latest</div><div class="s-val s-green">9 Jun 2026</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════ CONTENT ═══ -->
+<main class="content">
+
+  <!-- ── 2026 ── -->
+  <div class="year-band">
+    2026
+    <span class="yb-count">1 report</span>
+  </div>
+
+  <!-- ── June 2026 ── -->
+  <div class="month-header">
+    June 2026
+    <span class="mh-count">1 report</span>
+  </div>
+
+  <!-- ── Report: 9 June 2026 — Stock Action Plan ── -->
+  <div class="report-card">
+    <div class="rc-meta">
+      <span class="rc-date">9 June 2026</span>
+      <span class="badge badge-action-plan">Action Plan</span>
+    </div>
+
+    <div class="rc-title">
+      <a href="market-sage-action-plan-9jun2026.html">Market Sage — Indian Stock Action Plan</a>
+    </div>
+
+    <div class="rc-desc">
+      Comprehensive phased deployment plan for <strong>~₹5.80L</strong> (₹5L fresh capital + ~₹80K FCL trim proceeds) across
+      6 new positions filling key portfolio gaps — BFSI/Insurance IT, Specialty Chemicals/CDMO, Capital Markets
+      Infrastructure, Diagnostics, Hospital Networks, and Life Insurance. Includes FCL concentration trim (zero LTCG
+      tax), KPITTECH position build, KAYNES watch, SOLARINDS 4-gate add criteria, and a 9-stock quarterly
+      thesis-breaker review schedule.
+    </div>
+
+    <div class="tickers-row">
+      <span class="ticker-pill">COFORGE</span>
+      <span class="ticker-pill">NAVINFLUOR</span>
+      <span class="ticker-pill">CAMS</span>
+      <span class="ticker-pill">LALPATHLAB</span>
+      <span class="ticker-pill">MAXHEALTH</span>
+      <span class="ticker-pill">SBILIFE</span>
+      <span class="ticker-pill">FCL</span>
+      <span class="ticker-pill">KPITTECH</span>
+      <span class="ticker-pill">KAYNES</span>
+      <span class="ticker-pill">DIVISLAB</span>
+      <span class="ticker-pill">BAJFINANCE</span>
+      <span class="ticker-pill">ICICIBANK</span>
+      <span class="ticker-pill">SOLARINDS</span>
+      <span class="ticker-pill more">+ 7 more</span>
+    </div>
+
+    <div class="card-stats">
+      <div class="cs-item">
+        <span class="cs-label">Stock P&amp;L</span>
+        <span class="cs-val pos">+₹6,65,306 (+103.1%)</span>
+      </div>
+      <div class="cs-item">
+        <span class="cs-label">Fresh Capital</span>
+        <span class="cs-val">₹5,00,000</span>
+      </div>
+      <div class="cs-item">
+        <span class="cs-label">Total Deployable</span>
+        <span class="cs-val">~₹5,80,000</span>
+      </div>
+      <div class="cs-item">
+        <span class="cs-label">New Buys</span>
+        <span class="cs-val">6 Stocks</span>
+      </div>
+      <div class="cs-item">
+        <span class="cs-label">Positions Held</span>
+        <span class="cs-val">21 + 1 SGB</span>
+      </div>
+      <div class="cs-item">
+        <span class="cs-label">Trim · Build · Watch</span>
+        <span class="cs-val">FCL · KPITTECH · KAYNES</span>
+      </div>
+    </div>
+
+    <a class="rc-view-btn" href="market-sage-action-plan-9jun2026.html">View Full Report</a>
+  </div>
+
+</main>
+
+<!-- ═══════════════════════════════════════════ FOOTER ═══ -->
+<footer class="report-footer">
+  <div class="disclaimer-title">⚠ Important Disclaimer</div>
+  <p>These reports are generated for <strong>educational and personal research purposes only</strong> and do <strong>NOT</strong> constitute financial advice, investment advice, or a solicitation to buy or sell any security. Equity investments are subject to market risks. Past performance does not guarantee future results.</p>
+  <p style="margin-top:6px">Please consult a <strong>SEBI-registered investment advisor</strong> before making any investment decisions. All financial figures were fetched live from public sources on the respective report dates and may be materially different today.</p>
+  <p style="margin-top:10px;color:#64748b;font-size:10px">Market Sage HTML Reports Archive · Powered by Anthropic Claude Sonnet 4.6 · Indian Markets · Data: NSE India, Screener.in</p>
+</footer>
+
+</body>
+</html>

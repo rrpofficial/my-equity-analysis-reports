@@ -1,0 +1,57 @@
+# ── MkDocs build output ──────────────────────────────────
+site/
+
+# ── Python ───────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+dist/
+build/
+.Python
+pip-wheel-metadata/
+.python-version
+
+# ── Virtual environments ──────────────────────────────────
+.env
+.venv/
+venv/
+env/
+ENV/
+
+# ── MkDocs / Material cache ───────────────────────────────
+.cache/
+.mkdocs_material_insiders_cache/
+
+# ── OS files ─────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ── Editor / IDE ─────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.bak
+*.orig
+*.rej
+.project
+.classpath
+
+# ── Logs & temp ──────────────────────────────────────────
+*.log
+*.tmp
+*.temp
+
+# ── input_reports — track folder only, ignore contents ───
+input_reports/*
+!input_reports/.gitkeep

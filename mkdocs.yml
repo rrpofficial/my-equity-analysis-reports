@@ -1,0 +1,87 @@
+site_name: Market Sage — Equity Analysis Reports
+site_description: Personal equity research and stock analysis archive · Indian Markets · Zerodha Kite
+site_author: Rakesh Reddy Ponnala
+site_url: https://rrpofficial.github.io/my-equity-analysis-reports/
+repo_url: https://github.com/rrpofficial/my-equity-analysis-reports
+repo_name: rrpofficial/my-equity-analysis-reports
+copyright: Rakesh Reddy Ponnala · Personal Research Archive
+
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: market-sage
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: light-blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.instant
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.tabs.link
+    - toc.follow
+  icon:
+    logo: material/chart-line-variant
+    repo: fontawesome/brands/github
+
+extra_css:
+  - stylesheets/extra.css
+
+plugins:
+  - search:
+      lang: en
+  - tags
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - def_list
+  - footnotes
+
+nav:
+  - Home: index.md
+  # BEGIN_REPORTS_NAV
+  - Reports:
+    - "2026":
+      - "June 2026":
+        - reports/2026/june/market-sage-action-plan-9jun2026.md
+  # END_REPORTS_NAV
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/rrpofficial

@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Sage — Stock Action Plan | 9 June 2026</title>
+<style>
+  :root {
+    --navy:      #0f2744;
+    --navy-mid:  #1e3a5f;
+    --blue:      #1d4ed8;
+    --slate:     #334155;
+    --slate-lt:  #475569;
+    --bg:        #f1f5f9;
+    --bg-card:   #ffffff;
+    --border:    #cbd5e1;
+    --text:      #0f172a;
+    --text-muted:#64748b;
+    --buy:       #15803d;
+    --buy-bg:    #dcfce7;
+    --build:     #0369a1;
+    --build-bg:  #e0f2fe;
+    --hold:      #1e40af;
+    --hold-bg:   #dbeafe;
+    --trim:      #c2410c;
+    --trim-bg:   #ffedd5;
+    --watch:     #92400e;
+    --watch-bg:  #fef3c7;
+    --exclude:   #991b1b;
+    --exclude-bg:#fee2e2;
+    --pos:       #15803d;
+    --neg:       #b91c1c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* ── HEADER ── */
+  .report-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    color: #fff;
+    padding: 32px 40px 24px;
+    border-bottom: 4px solid #3b82f6;
+  }
+  .report-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+  }
+  .report-header .subtitle {
+    font-size: 13px;
+    color: #93c5fd;
+    margin-bottom: 20px;
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 16px;
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .meta-item .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: #93c5fd; }
+  .meta-item .value { font-size: 15px; font-weight: 700; color: #fff; }
+
+  /* ── STATS STRIP ── */
+  .stats-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+  }
+  .stat-box {
+    flex: 1;
+    min-width: 120px;
+    padding: 12px 20px;
+    border-right: 1px solid #334155;
+    text-align: center;
+  }
+  .stat-box:last-child { border-right: none; }
+  .stat-box .s-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.7px; color: #64748b; }
+  .stat-box .s-val   { font-size: 16px; font-weight: 700; margin-top: 2px; }
+  .s-green { color: #4ade80; }
+  .s-amber { color: #fbbf24; }
+  .s-red   { color: #f87171; }
+  .s-blue  { color: #60a5fa; }
+  .s-white { color: #f8fafc; }
+
+  /* ── MAIN CONTENT ── */
+  .content { padding: 28px 40px; max-width: 1600px; margin: 0 auto; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 36px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-num {
+    width: 28px; height: 28px;
+    background: var(--navy);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; flex-shrink: 0;
+  }
+  .section-title { font-size: 16px; font-weight: 700; color: var(--navy); }
+  .section-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    line-height: 1.6;
+    background: #f8fafc;
+    border-left: 3px solid #3b82f6;
+    padding: 8px 12px;
+    border-radius: 0 4px 4px 0;
+  }
+  .section-desc strong { color: var(--slate); }
+
+  /* ── TABLE ── */
+  .tbl-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.07); }
+  table { width: 100%; border-collapse: collapse; background: var(--bg-card); }
+  thead tr { background: var(--slate); color: #fff; }
+  thead th {
+    padding: 9px 12px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  tbody tr { border-bottom: 1px solid #e2e8f0; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #f8fafc; }
+  td {
+    padding: 9px 12px;
+    vertical-align: top;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .stock-name { font-weight: 700; font-size: 13px; color: var(--navy); letter-spacing: 0.2px; }
+  .sub { display: block; font-size: 10px; color: var(--text-muted); font-weight: 400; margin-top: 1px; }
+
+  /* ── ACTION BADGES ── */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .badge-buy      { background: var(--buy-bg);     color: var(--buy);     border: 1px solid #86efac; }
+  .badge-build    { background: var(--build-bg);   color: var(--build);   border: 1px solid #7dd3fc; }
+  .badge-hold     { background: var(--hold-bg);    color: var(--hold);    border: 1px solid #93c5fd; }
+  .badge-trim     { background: var(--trim-bg);    color: var(--trim);    border: 1px solid #fdba74; }
+  .badge-watch    { background: var(--watch-bg);   color: var(--watch);   border: 1px solid #fcd34d; }
+  .badge-exclude  { background: var(--exclude-bg); color: var(--exclude); border: 1px solid #fca5a5; }
+
+  /* ── NUMBERS ── */
+  .pos { color: var(--pos); font-weight: 600; }
+  .neg { color: var(--neg); font-weight: 600; }
+  .alloc { font-weight: 700; color: var(--navy); }
+  .price { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 12px; }
+  .phase-block { display: flex; flex-direction: column; gap: 3px; }
+  .phase-row { display: flex; gap: 6px; align-items: baseline; }
+  .phase-label { font-size: 9px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; min-width: 20px; }
+  .phase-val { font-size: 12px; font-weight: 600; color: var(--navy); }
+
+  /* ── DEPLOYMENT SUMMARY ── */
+  .deploy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .deploy-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    border-top: 3px solid var(--blue);
+  }
+  .deploy-card.phase1 { border-top-color: #16a34a; }
+  .deploy-card.phase2 { border-top-color: #2563eb; }
+  .deploy-card.phase3 { border-top-color: #7c3aed; }
+  .deploy-card.total  { border-top-color: #dc2626; }
+  .deploy-card.fcl    { border-top-color: #d97706; }
+  .dc-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.7px; color: var(--text-muted); }
+  .dc-amount { font-size: 22px; font-weight: 800; color: var(--navy); margin: 4px 0 2px; }
+  .dc-detail { font-size: 11px; color: var(--text-muted); }
+
+  /* ── FOOTER ── */
+  .report-footer {
+    background: var(--navy);
+    color: #94a3b8;
+    padding: 20px 40px;
+    font-size: 11px;
+    line-height: 1.7;
+    margin-top: 20px;
+  }
+  .report-footer strong { color: #cbd5e1; }
+  .disclaimer-title { color: #e2e8f0; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+
+  /* ── PHASE PILL ── */
+  .phase-pill {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    white-space: nowrap;
+  }
+  .p1 { background: #dcfce7; color: #15803d; }
+  .p2 { background: #dbeafe; color: #1d4ed8; }
+  .p3 { background: #ede9fe; color: #6d28d9; }
+
+  /* ── CALLOUT BOX ── */
+  .callout {
+    display: flex; gap: 10px;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-left: 4px solid #f59e0b;
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    margin: 10px 0 14px;
+    font-size: 12px;
+    color: #78350f;
+  }
+  .callout-icon { font-size: 16px; flex-shrink: 0; }
+  .callout-green {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+    border-left-color: #16a34a;
+    color: #14532d;
+  }
+
+  @media print {
+    body { background: #fff; font-size: 11px; }
+    .report-header { padding: 16px 20px; }
+    .content { padding: 16px 20px; }
+    .section { page-break-inside: avoid; }
+    .deploy-grid { grid-template-columns: repeat(5, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ HEADER ═══ -->
+<header class="report-header">
+  <h1>Market Sage — Indian Stock Action Plan</h1>
+  <div class="subtitle">Comprehensive Portfolio Deployment & Management Report · Powered by Market Sage Skill</div>
+  <div class="meta-row">
+    <div class="meta-item"><span class="label">Report Date</span><span class="value">9 June 2026</span></div>
+    <div class="meta-item"><span class="label">Portfolio</span><span class="value">Zerodha Kite (Indian Equities)</span></div>
+    <div class="meta-item"><span class="label">Stocks Held</span><span class="value">21 Positions + 1 SGB</span></div>
+    <div class="meta-item"><span class="label">Stock P&L</span><span class="value" style="color:#4ade80">+₹6,65,306 (+103.1%)</span></div>
+    <div class="meta-item"><span class="label">Fresh Capital</span><span class="value">₹5,00,000</span></div>
+    <div class="meta-item"><span class="label">Horizon</span><span class="value">15–20 Years</span></div>
+    <div class="meta-item"><span class="label">Target CAGR</span><span class="value">15–18%</span></div>
+    <div class="meta-item"><span class="label">Data Source</span><span class="value">Live · NSE / Screener.in</span></div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════ STATS ═══ -->
+<div class="stats-strip">
+  <div class="stat-box"><div class="s-label">New Buys</div><div class="s-val s-green">6 Stocks</div></div>
+  <div class="stat-box"><div class="s-label">Build Positions</div><div class="s-val s-blue">1 Stock</div></div>
+  <div class="stat-box"><div class="s-label">Trim</div><div class="s-val s-amber">1 Stock</div></div>
+  <div class="stat-box"><div class="s-label">Hold (No Action)</div><div class="s-val s-white">18 Stocks</div></div>
+  <div class="stat-box"><div class="s-label">Watch</div><div class="s-val s-amber">1 Stock</div></div>
+  <div class="stat-box"><div class="s-label">Permanently Excluded</div><div class="s-val s-red">2 Stocks</div></div>
+  <div class="stat-box"><div class="s-label">Total Deployable</div><div class="s-val s-green">~₹5.80L</div></div>
+  <div class="stat-box"><div class="s-label">Phase 1 Capital</div><div class="s-val s-blue">~₹2.28L</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════ CONTENT ═══ -->
+<main class="content">
+
+  <!-- ─────────────── SECTION 1: NEW BUYS ─────────────── -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title">New Buy Recommendations — Deploy Fresh Capital</div>
+    </div>
+    <div class="section-desc">
+      Six new positions identified to fill portfolio gaps. Key gaps addressed: <strong>BFSI/Insurance IT</strong> (COFORGE), <strong>Specialty Chemicals/CDMO</strong> (NAVINFLUOR), <strong>Capital Markets Infrastructure</strong> (CAMS), <strong>Diagnostics</strong> (LALPATHLAB), <strong>Hospital Networks</strong> (MAXHEALTH), and <strong>Life Insurance</strong> (SBILIFE — large-cap exception justified by 0.96% Nifty 50 weight giving only ~₹3,072 effective exposure via index fund, and zero insurance in portfolio). Deployment is phased across 3 tranches to reduce timing risk. Large-cap avoidance rule maintained for all except SBILIFE where index overlap is negligible.
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Stock</th>
+            <th>Action</th>
+            <th>Sector / Thesis</th>
+            <th>Max Alloc</th>
+            <th>Phase-wise Allocation</th>
+            <th>Phase 1 Entry Zone<br><span style="font-weight:400;font-size:10px">Now–30 days</span></th>
+            <th>Phase 2 Entry Zone<br><span style="font-weight:400;font-size:10px">30–90 days</span></th>
+            <th>Phase 3 Entry Zone<br><span style="font-weight:400;font-size:10px">90+ days</span></th>
+            <th>LTP (9 Jun)</th>
+            <th>52W Range</th>
+            <th>Stop-Loss Review</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><span class="stock-name">COFORGE</span><span class="sub">Mid-cap IT · ₹60,727 Cr MCap</span></td>
+            <td><span class="badge badge-buy">Cond. BUY</span></td>
+            <td>BFSI/Insurance IT<br><span class="sub">Nexa AI platform, Cigniti QE, Encora; 21 large deals FY26</span></td>
+            <td class="alloc">₹70,000</td>
+            <td>
+              <div class="phase-block">
+                <div><span class="phase-pill p1">P1</span> <span class="phase-val">₹25,000</span></div>
+                <div><span class="phase-pill p2">P2</span> <span class="phase-val">₹30,000</span></div>
+                <div><span class="phase-pill p3">P3</span> <span class="phase-val">₹15,000</span></div>
+              </div>
+            </td>
+            <td class="price">₹1,380–1,420</td>
+            <td class="price">₹1,280–1,330<br><span class="sub">50 DMA zone</span></td>
+            <td class="price">Close &gt; ₹1,554<br><span class="sub">200 DMA breakout</span></td>
+            <td class="price alloc">₹1,412.00</td>
+            <td class="price"><span class="pos">₹1,984</span> / <span class="neg">₹1,008</span></td>
+            <td>Below ₹1,200 for 10+ days</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><span class="stock-name">NAVINFLUOR</span><span class="sub">Mid-cap Chem · ₹35,021 Cr MCap</span></td>
+            <td><span class="badge badge-buy">BUY</span></td>
+            <td>Specialty Fluorochemicals / CDMO<br><span class="sub">Dahej expansion, MPP/CRAMS growth; Golden Cross active</span></td>
+            <td class="alloc">₹80,000</td>
+            <td>
+              <div class="phase-block">
+                <div><span class="phase-pill p1">P1</span> <span class="phase-val">₹30,000</span></div>
+                <div><span class="phase-pill p2">P2</span> <span class="phase-val">₹30,000</span></div>
+                <div><span class="phase-pill p3">P3</span> <span class="phase-val">₹20,000</span></div>
+              </div>
+            </td>
+            <td class="price">₹6,700–6,900</td>
+            <td class="price">₹6,000–6,300<br><span class="sub">Between 50/200 DMA</span></td>
+            <td class="price">Close &gt; ₹7,229<br><span class="sub">R1 breakout</span></td>
+            <td class="price alloc">₹6,828.50</td>
+            <td class="price"><span class="pos">₹7,525</span> / <span class="neg">₹4,337</span></td>
+            <td>Below ₹5,650 (S2)</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><span class="stock-name">CAMS</span><span class="sub">Mid-cap Fintech · ₹18,591 Cr MCap</span></td>
+            <td><span class="badge badge-buy">BUY</span></td>
+            <td>Capital Markets Infrastructure<br><span class="sub">MF transfer agent duopoly; SIP flow compounder; above 200 DMA</span></td>
+            <td class="alloc">₹75,000</td>
+            <td>
+              <div class="phase-block">
+                <div><span class="phase-pill p1">P1</span> <span class="phase-val">₹30,000</span></div>
+                <div><span class="phase-pill p2">P2</span> <span class="phase-val">₹28,000</span></div>
+                <div><span class="phase-pill p3">P3</span> <span class="phase-val">₹17,000</span></div>
+              </div>
+            </td>
+            <td class="price">₹730–760<br><span class="sub">50 DMA zone</span></td>
+            <td class="price">₹650–690<br><span class="sub">S1 support</span></td>
+            <td class="price">Close &gt; ₹807<br><span class="sub">R1 breakout</span></td>
+            <td class="price alloc">₹749.70</td>
+            <td class="price"><span class="pos">₹860</span> / <span class="neg">₹611</span></td>
+            <td>Below ₹600 (S2)</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><span class="stock-name">LALPATHLAB</span><span class="sub">Mid-cap Healthcare · ₹26,312 Cr MCap</span></td>
+            <td><span class="badge badge-buy">BUY</span></td>
+            <td>Diagnostics / Pathology<br><span class="sub">Franchise network moat; Golden Cross; above 200 DMA</span></td>
+            <td class="alloc">₹75,000</td>
+            <td>
+              <div class="phase-block">
+                <div><span class="phase-pill p1">P1</span> <span class="phase-val">₹28,000</span></div>
+                <div><span class="phase-pill p2">P2</span> <span class="phase-val">₹27,000</span></div>
+                <div><span class="phase-pill p3">P3</span> <span class="phase-val">₹20,000</span></div>
+              </div>
+            </td>
+            <td class="price">₹1,530–1,590</td>
+            <td class="price">₹1,440–1,510<br><span class="sub">200 DMA zone</span></td>
+            <td class="price">Close &gt; ₹1,660<br><span class="sub">R1 breakout</span></td>
+            <td class="price alloc">₹1,575.80</td>
+            <td class="price"><span class="pos">₹1,761</span> / <span class="neg">₹1,272</span></td>
+            <td>Below ₹1,270 (52W low)</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td><span class="stock-name">MAXHEALTH</span><span class="sub">Large-Mid · ₹97,626 Cr MCap</span></td>
+            <td><span class="badge badge-buy">BUY (Staggered)</span></td>
+            <td>Hospital Networks<br><span class="sub">Premium hospital chain; Death Cross active — stagger entry carefully</span></td>
+            <td class="alloc">₹65,000</td>
+            <td>
+              <div class="phase-block">
+                <div><span class="phase-pill p1">P1</span> <span class="phase-val">₹20,000</span></div>
+                <div><span class="phase-pill p2">P2</span> <span class="phase-val">₹27,000</span></div>
+                <div><span class="phase-pill p3">P3</span> <span class="phase-val">₹18,000</span></div>
+              </div>
+            </td>
+            <td class="price">₹960–1,010<br><span class="sub">50 DMA zone</span></td>
+            <td class="price">₹910–950<br><span class="sub">Near 52W low</span></td>
+            <td class="price">Close &gt; ₹1,071<br><span class="sub">200 DMA confirmation</span></td>
+            <td class="price alloc">₹1,003.10</td>
+            <td class="price"><span class="pos">₹1,314</span> / <span class="neg">₹903</span></td>
+            <td>Below ₹895 (52W low)</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td><span class="stock-name">SBILIFE</span><span class="sub">Large-cap · ₹1,77,471 Cr MCap</span></td>
+            <td><span class="badge badge-buy">BUY — LC Exception</span></td>
+            <td>Life Insurance<br><span class="sub">0.96% Nifty 50 weight = only ₹3,072 index exposure. Zero insurance in portfolio. Near 52W low, RSI oversold zone.</span></td>
+            <td class="alloc">₹45,000</td>
+            <td>
+              <div class="phase-block">
+                <div><span class="phase-pill p1">P1</span> <span class="phase-val">₹15,000</span></div>
+                <div><span class="phase-pill p2">P2</span> <span class="phase-val">₹18,000</span></div>
+                <div><span class="phase-pill p3">P3</span> <span class="phase-val">₹12,000</span></div>
+              </div>
+            </td>
+            <td class="price">₹1,720–1,780<br><span class="sub">Near 52W low</span></td>
+            <td class="price">₹1,720–1,740<br><span class="sub">S2 zone test</span></td>
+            <td class="price">Close &gt; ₹1,850<br><span class="sub">+ RSI &gt; 45</span></td>
+            <td class="price alloc">₹1,769.10</td>
+            <td class="price"><span class="pos">₹2,129</span> / <span class="neg">₹1,717</span></td>
+            <td>Below ₹1,690 (below 52W low)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout callout-green" style="margin-top:10px">
+      <span class="callout-icon">💡</span>
+      <span><strong>Phase 1 Total: ₹1,48,000</strong> from fresh capital. Use <strong>FCL trim proceeds (~₹80,000)</strong> to top up Phase 1 entries on NAVINFLUOR and LALPATHLAB — both have superior technical setups (Golden Cross, above 200 DMA).</span>
+    </div>
+  </section>
+
+  <!-- ─────────────── SECTION 2: SPECIFIC ACTIONS ─────────────── -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title">Existing Portfolio — Specific Actions Required</div>
+    </div>
+    <div class="section-desc">
+      Three existing positions require specific action beyond passive hold. <strong>FCL (Fineotex Chemical)</strong> is critically overweight at ~11% of stock portfolio on a +508% gain — trim 2,000 of 3,700 shares immediately (LTCG gain ~₹67,000 is under the ₹1.25L exemption limit, so <strong>zero tax</strong>). <strong>KPITTECH</strong> is a conviction mid-cap auto-software play sitting flat at −0.36% — build the position while it is at cost. <strong>KAYNES</strong> is held at a loss (−20.3%) and should <em>not</em> be averaged down until fundamentals recover.
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Stock</th>
+            <th>Action</th>
+            <th>Current Position</th>
+            <th>Avg Cost</th>
+            <th>LTP (9 Jun)</th>
+            <th>P&amp;L</th>
+            <th>New Allocation / Qty</th>
+            <th>Entry Zone</th>
+            <th>Exit / Trim Trigger</th>
+            <th>Rationale</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>7</td>
+            <td><span class="stock-name">FCL</span><span class="sub">Fineotex Chemical · Micro-cap</span></td>
+            <td><span class="badge badge-trim">TRIM</span></td>
+            <td>3,700 shares · ₹1,48,333 current value</td>
+            <td class="price">₹6.59</td>
+            <td class="price alloc">₹40.09</td>
+            <td class="pos">+508.3%</td>
+            <td><strong>Sell 2,000 shares</strong><br><span class="sub">Retain 1,700 shares. Execute at market (₹40+)</span></td>
+            <td class="price">₹40+ (market)</td>
+            <td>Proceeds ~₹80,180. LTCG ₹67K &lt; ₹1.25L exemption = <strong>Zero tax</strong></td>
+            <td>11.3% portfolio weight in a micro-cap is excess concentration. Partial trim reduces risk while retaining upside on remaining 1,700 shares.</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td><span class="stock-name">KPITTECH</span><span class="sub">Mid-cap IT · Auto Software</span></td>
+            <td><span class="badge badge-build">BUILD</span></td>
+            <td>15 shares · ₹11,407 current value</td>
+            <td class="price">₹760.45</td>
+            <td class="price alloc">₹757.70</td>
+            <td class="neg">−0.36%</td>
+            <td><strong>Add ₹45,000 total</strong><br>
+              <div class="phase-block" style="margin-top:4px">
+                <div><span class="phase-pill p1">P1</span> <span class="phase-val">₹20,000</span></div>
+                <div><span class="phase-pill p2">P2</span> <span class="phase-val">₹25,000</span></div>
+              </div>
+            </td>
+            <td class="price">₹720–760 (Phase 1)<br>₹700–720 (Phase 2)</td>
+            <td>Trim if crosses ₹1,200 (>57% gain), or if auto OEM IT spend declines 2Q in a row</td>
+            <td>Automotive software moat (AUTOSAR, EV software stacks). Entry at near-cost = asymmetric risk. Builds position to meaningful size (~₹56K total).</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td><span class="stock-name">KAYNES</span><span class="sub">EMS / Electronics · Mid-cap</span></td>
+            <td><span class="badge badge-watch">WATCH / HOLD</span></td>
+            <td>3 shares · ₹9,225 current value</td>
+            <td class="price">₹3,859.17</td>
+            <td class="price">₹3,074.85</td>
+            <td class="neg">−20.3%</td>
+            <td><strong>No new capital</strong><br><span class="sub">Do NOT average down</span></td>
+            <td class="price">Add only if: ROCE &gt; 15% <strong>AND</strong> OPM &gt; 17%</td>
+            <td>Sell entire position if Q2 FY27 (Oct 2026) doesn't show improvement</td>
+            <td>FY26 Q4: PAT −21.5% YoY despite +26% revenue. ROCE 13.2%, OPM 14% — both below EMS quality benchmarks (ROCE &gt;15%, OPM &gt;18%). Thesis is strained.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─────────────── SECTION 3: HOLD ─────────────── -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title">Existing Portfolio — Hold (No Fresh Capital)</div>
+    </div>
+    <div class="section-desc">
+      18 positions to be held without adding fresh capital. Most are well-sized, strongly compounding positions. Key constraints: <strong>DIVISLAB and SBILIFE are Nifty 50 constituents</strong> (index fund covers them adequately); <strong>CGPOWER is now large-cap at ₹143K Cr MCap</strong> with PE of 118.6× — hold the original position's gains but do not add. The <strong>Sovereign Gold Bond (SGB)</strong> matures in 2028 with a tax-free exit. No action required on any of these unless thesis-breaker events occur.
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Stock</th>
+            <th>Action</th>
+            <th>Current Value</th>
+            <th>LTP (9 Jun)</th>
+            <th>P&amp;L %</th>
+            <th>Hold Until</th>
+            <th>Trim / Exit Trigger</th>
+            <th>Investment Thesis</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>10</td>
+            <td><span class="stock-name">DIVISLAB</span><span class="sub">Pharma API · Nifty 50</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹1,28,165</td>
+            <td class="price">₹6,745.50</td>
+            <td class="pos">+94.9%</td>
+            <td>Long-term (10Y+)</td>
+            <td>If exits Nifty 50 constituency</td>
+            <td>Best-in-class pharma API manufacturer. Nifty 50 member — index provides adequate additional exposure. Position well-sized.</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td><span class="stock-name">CGPOWER</span><span class="sub">Capital Goods · Large-cap</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹27,297</td>
+            <td class="price">₹909.90</td>
+            <td class="pos">+36.9%</td>
+            <td>Long-term</td>
+            <td>PE &gt; 120× on flat earnings for 2Q; or position exceeds target weight</td>
+            <td>Stellar original buy at ₹665. Now large-cap (₹1,43,000 Cr MCap), PE 118.6×. Hold existing; adding at this valuation is irrational.</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td><span class="stock-name">CDSL</span><span class="sub">Depository · Mid-cap</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹18,193</td>
+            <td class="price">₹1,212.90</td>
+            <td class="pos">+6.7%</td>
+            <td>Long-term</td>
+            <td>SEBI settlement reform that disrupts depository revenue model</td>
+            <td>Capital markets infrastructure duopoly. Small position; let compound over the demat growth cycle.</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td><span class="stock-name">BAJFINANCE</span><span class="sub">NBFC · Large-Mid</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹1,57,229</td>
+            <td class="price">₹888.30</td>
+            <td class="pos">+41.6%</td>
+            <td>Long-term (10Y+)</td>
+            <td>GNPA &gt; 2% or RoA &lt; 1.8% sustained for 2 quarters</td>
+            <td>India's premier consumer NBFC. Largest stock position. Fully sized — no additions needed.</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td><span class="stock-name">ICICIBANK</span><span class="sub">Private Bank · Nifty 50</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹1,53,204</td>
+            <td class="price">₹1,276.70</td>
+            <td class="pos">+196.5%</td>
+            <td>Long-term (10Y+)</td>
+            <td>Consider partial trim above ₹1,600 (approx 2.5× P/B)</td>
+            <td>Best-run private bank in India. Exceptional compounding at ₹431 avg cost. Core portfolio holding.</td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td><span class="stock-name">ABBOTINDIA</span><span class="sub">MNC Pharma · Large-cap</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹52,112</td>
+            <td class="price">₹26,056.05</td>
+            <td class="pos">+35.2%</td>
+            <td>Long-term (10Y+)</td>
+            <td>If Abbott global signals India portfolio rationalisation or promoter holding declines</td>
+            <td>MNC pharma with strong brand portfolio. Parent (Abbott Inc) discipline = quality governance by default.</td>
+          </tr>
+          <tr>
+            <td>16</td>
+            <td><span class="stock-name">EICHERMOT</span><span class="sub">Auto · Large-cap</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹71,995</td>
+            <td class="price">₹7,199.50</td>
+            <td class="pos">+153.7%</td>
+            <td>Long-term (10Y+)</td>
+            <td>Royal Enfield loses &gt;5% market share in 350–500cc to electric segment</td>
+            <td>Premium two-wheeler moat. Extraordinary buy at ₹2,838 avg. Holds through the EV transition due to brand loyalty.</td>
+          </tr>
+          <tr>
+            <td>17</td>
+            <td><span class="stock-name">DIXON</span><span class="sub">EMS · Mid-cap</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹34,875</td>
+            <td class="price">₹11,625.00</td>
+            <td class="pos">+17.4%</td>
+            <td>Long-term</td>
+            <td>PLI scheme disrupted or Chinese import barriers removed</td>
+            <td>India's leading EMS company. PLI beneficiary across phones, appliances, LEDs. Small position — let it grow.</td>
+          </tr>
+          <tr>
+            <td>18</td>
+            <td><span class="stock-name">KEI</span><span class="sub">Wires &amp; Cables · Mid-cap</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹1,05,520</td>
+            <td class="price">₹5,276.00</td>
+            <td class="pos">+146.4%</td>
+            <td>Long-term</td>
+            <td>Sector-wide order flow slows for 2 consecutive quarters</td>
+            <td>Capex cycle + real estate + infrastructure beneficiary. Bought at ₹2,141 avg — strong position.</td>
+          </tr>
+          <tr>
+            <td>19</td>
+            <td><span class="stock-name">POLYCAB</span><span class="sub">FMEG + Cables · Large-Mid</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹48,127</td>
+            <td class="price">₹9,625.45</td>
+            <td class="pos">+41.2%</td>
+            <td>Long-term</td>
+            <td>Same sector watch as KEI; monitor together</td>
+            <td>FMEG + cables leader. Higher brand moat than KEI. Recently built at ₹6,819 avg.</td>
+          </tr>
+          <tr>
+            <td>20</td>
+            <td><span class="stock-name">SOLARINDS</span><span class="sub">Defence + Mining · Mid-cap</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹54,960</td>
+            <td class="price">₹18,320.00</td>
+            <td class="pos">+47.99%</td>
+            <td>Long-term</td>
+            <td>Defence capital expenditure budget cut &gt; 10% in Union Budget</td>
+            <td>Explosives licence moat (mining + defence). Defence export potential from Nagpur facility.</td>
+          </tr>
+          <tr>
+            <td>21</td>
+            <td><span class="stock-name">TRENT</span><span class="sub">Retail Fashion · Large-Mid</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹33,315</td>
+            <td class="price">₹2,776.30</td>
+            <td class="pos">+24.1%</td>
+            <td>Long-term (10Y+)</td>
+            <td>SSSG declines for 2 consecutive quarters; or Reliance Retail scales aggressively in same segment</td>
+            <td>Tata-backed fast fashion compounder. Westside + Zudio strong SSSG track record.</td>
+          </tr>
+          <tr>
+            <td>22</td>
+            <td><span class="stock-name">TITAN</span><span class="sub">Jewellery + Watches · Large-cap</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹82,236</td>
+            <td class="price">₹4,111.80</td>
+            <td class="pos">+123.4%</td>
+            <td>Long-term (10Y+)</td>
+            <td>Monitor gold duty impact on Q1 FY27 jewellery revenue</td>
+            <td>Premium jewellery + watch brand with Tata trust. Gold duty increase (15%) and PM advisory are short-term headwinds to monitor.</td>
+          </tr>
+          <tr>
+            <td>23</td>
+            <td><span class="stock-name">TATACONSUM</span><span class="sub">FMCG + Beverages</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹33,246</td>
+            <td class="price">₹1,108.20</td>
+            <td class="pos">+328.3%</td>
+            <td>Long-term (10Y+)</td>
+            <td>If Starbucks India turns structurally loss-making (3+ years of sustained losses)</td>
+            <td>Tata Consumer = India's FMCG compounder. Tea + salt + beverages + Starbucks licensing.</td>
+          </tr>
+          <tr>
+            <td>24</td>
+            <td><span class="stock-name">MASTEK</span><span class="sub">IT Services · Small-cap</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹16,238</td>
+            <td class="price">₹1,623.80</td>
+            <td class="pos">+260%</td>
+            <td>Long-term</td>
+            <td>UK public sector contracts not renewed; or management commentary on pipeline turns cautious</td>
+            <td>Niche UK government IT specialist. Exceptional gain from ₹451 avg. Tiny position — let ride.</td>
+          </tr>
+          <tr>
+            <td>25</td>
+            <td><span class="stock-name">SONATSOFTW</span><span class="sub">IT / Legacy Modernisation</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹38,449</td>
+            <td class="price">₹263.35</td>
+            <td class="pos">+125.9%</td>
+            <td>Long-term</td>
+            <td>MAIA platform revenue stalls for 2 consecutive quarters</td>
+            <td>Legacy modernisation + AI via MAIA platform. Niche play — not directly replicated by generic AI tools.</td>
+          </tr>
+          <tr>
+            <td>26</td>
+            <td><span class="stock-name">SUMICHEM</span><span class="sub">Agrochem · Small-cap</span></td>
+            <td><span class="badge badge-hold">HOLD</span></td>
+            <td>₹11,496</td>
+            <td class="price">₹459.85</td>
+            <td class="pos">+221.7%</td>
+            <td>Long-term</td>
+            <td>Japanese parent (Sumitomo Chem) rationalises India JV or reduces stake</td>
+            <td>Specialty agrochem JV with Sumitomo. Tiny position with strong gain. Let ride passively.</td>
+          </tr>
+          <tr>
+            <td>27</td>
+            <td><span class="stock-name">SGBOC28VII-GB</span><span class="sub">Sovereign Gold Bond · 2028 Maturity</span></td>
+            <td><span class="badge badge-hold">HOLD TO MATURITY</span></td>
+            <td>₹74,800</td>
+            <td class="price">₹14,959.99</td>
+            <td class="pos">+199.1%</td>
+            <td><strong>Until Oct 2028 (maturity)</strong></td>
+            <td>N/A — Government-backed; hold to maturity</td>
+            <td>Sovereign Gold Bond. Exit at maturity = <strong>completely tax-free</strong> on capital gains. Do not sell before maturity — you lose the tax exemption.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─────────────── SECTION 4: WATCH LIST ─────────────── -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title">Watch List — Conditional Entry (No Position Currently)</div>
+    </div>
+    <div class="section-desc">
+      One stock is on a <strong>conditional watch</strong> — identified as a potential buy, but a specific macroeconomic/policy risk must resolve first. <strong>Kalyan Jewellers (KALYANKJIL)</strong> was a Phase 1 BUY candidate in the initial analysis, but was downgraded after the gold import duty hike to 15% (effective 13 May 2026) and the PM Modi public advisory asking citizens to avoid gold purchases for 1 year. These dual demand headwinds make an immediate entry unjustifiable. The stock is already down 42.4% from its 52-week high — further downside is possible if Q1 FY27 SSSG is poor.
+    </div>
+    <div class="callout">
+      <span class="callout-icon">⚠️</span>
+      <span><strong>Policy Risk Active:</strong> Gold import duty raised from 6% to 15% on 13 May 2026. PM Modi publicly advised no gold purchases for 1 year. WGC projects 50–60 tonne annual demand decline (~10%). This directly impacts jewellery revenue. Wait for Q1 FY27 SSSG data before considering entry.</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Stock</th>
+            <th>Status</th>
+            <th>Watch Until</th>
+            <th>Metric(s) Required to Trigger BUY</th>
+            <th>Current Issue / Risk</th>
+            <th>LTP (9 Jun)</th>
+            <th>52W Range</th>
+            <th>Max Alloc if Triggered</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>W1</td>
+            <td><span class="stock-name">KALYANKJIL</span><span class="sub">Mass Jewellery · Mid-cap · ₹36,667 Cr MCap</span></td>
+            <td><span class="badge badge-watch">WATCH ONLY</span></td>
+            <td><strong>Q1 FY27 results</strong><br><span class="sub">July–August 2026</span></td>
+            <td>
+              <ol style="margin:0;padding-left:16px;font-size:12px">
+                <li>SSSG (same-store sales growth) <strong>&gt; +5% YoY</strong> in Q1 FY27</li>
+                <li>Management confirms no material footfall decline due to gold advisory</li>
+                <li>Gross margin resilience despite gold price/duty impact</li>
+              </ol>
+            </td>
+            <td>Gold import duty raised to 15% (May 13 2026). PM advisory against gold purchases for 1 year. WGC: 50–60T demand decline projected. Kalyan derives 70%+ revenue from gold jewellery.</td>
+            <td class="price">₹355.05</td>
+            <td class="price"><span class="pos">₹615.90</span> / <span class="neg">₹337.00</span></td>
+            <td class="alloc">₹50,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─────────────── SECTION 5: EXCLUDED ─────────────── -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title">Permanently Excluded — Do Not Add</div>
+    </div>
+    <div class="section-desc">
+      Two stocks were analysed and explicitly excluded from the deployment plan. Both were previously recommended in earlier sessions. <strong>HDFCAMC</strong> is confirmed as a Nifty Next 50 constituent — the user holds ₹1.65L in ICICI Prudential Nifty Next 50 Index Fund, giving meaningful indirect exposure. <strong>Adding DIVISLAB further</strong> is excluded as it is a Nifty 50 constituent already held in meaningful weight (19 shares, ₹1.28L current value). These exclusions specifically enforce the user's stated policy of no large-cap duplication with existing index fund holdings.
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Stock</th>
+            <th>Action</th>
+            <th>Reason for Exclusion</th>
+            <th>Index Membership</th>
+            <th>User's Existing Exposure</th>
+            <th>Change That Would Re-qualify</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>E1</td>
+            <td><span class="stock-name">HDFCAMC</span><span class="sub">Large-cap AMC · Asset Management</span></td>
+            <td><span class="badge badge-exclude">EXCLUDED</span></td>
+            <td>Confirmed Nifty Next 50 constituent. User holds ₹1.65L in ICICI Prudential Nifty Next 50 Index Fund — adding HDFCAMC direct creates meaningful duplication.</td>
+            <td><strong>Nifty Next 50</strong> (confirmed via Screener.in peers list)</td>
+            <td>~₹1.65L × HDFCAMC index weight = indirect exposure already exists</td>
+            <td>Removal from Nifty Next 50 index</td>
+          </tr>
+          <tr>
+            <td>E2</td>
+            <td><span class="stock-name">DIVISLAB (add)</span><span class="sub">Large-cap Pharma API · Nifty 50</span></td>
+            <td><span class="badge badge-exclude">EXCLUDED (add)</span></td>
+            <td>Nifty 50 constituent. User holds ₹3.2L in ICICI Prudential Nifty 50 Index Fund. Additionally, DIVISLAB is already held (19 shares, ₹1.28L current value, +94.9% gain) — position is adequately sized.</td>
+            <td><strong>Nifty 50</strong></td>
+            <td>Direct: 19 shares (₹1.28L). Indirect via Nifty 50 fund: additional ~₹3,200–₹5,000 exposure</td>
+            <td>N/A — already in portfolio. HOLD only, no addition.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─────────────── SECTION 6: DEPLOYMENT ─────────────── -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div class="section-title">Phased Capital Deployment &amp; Quarterly Review Schedule</div>
+    </div>
+    <div class="section-desc">
+      Total deployable capital is approximately <strong>₹5.80 lakhs</strong> (₹5L fresh capital + ~₹80K from FCL trim proceeds). Deployment is structured in 3 phases to manage market timing risk. Phase 1 should begin immediately — the FCL trim frees cash that can fund the initial purchases. Phase 2 entries are triggered by price pullbacks to support/DMA zones. Phase 3 is reserved for stocks that have confirmed their 200 DMA recovery (breakout confirmation). Approximately ₹50K is held as a reserve for sudden market corrections.
+    </div>
+
+    <div class="deploy-grid">
+      <div class="deploy-card fcl">
+        <div class="dc-label">Pre-Phase: FCL Trim</div>
+        <div class="dc-amount">~₹80K</div>
+        <div class="dc-detail">Sell 2,000 FCL shares at ₹40+<br>Proceeds fund Phase 1 top-ups<br>Zero LTCG tax (gain &lt; ₹1.25L)</div>
+      </div>
+      <div class="deploy-card phase1">
+        <div class="dc-label">Phase 1 · Now–30 Days</div>
+        <div class="dc-amount">₹1,48,000</div>
+        <div class="dc-detail">+ FCL proceeds ≈ ₹2,28,000 total<br>6 new stocks + KPITTECH add<br>Enter at current or minor dip</div>
+      </div>
+      <div class="deploy-card phase2">
+        <div class="dc-label">Phase 2 · 30–90 Days</div>
+        <div class="dc-amount">₹1,60,000</div>
+        <div class="dc-detail">Add at support / DMA zones<br>Skip if stocks are running up<br>Only on price pullbacks</div>
+      </div>
+      <div class="deploy-card phase3">
+        <div class="dc-label">Phase 3 · 90+ Days</div>
+        <div class="dc-amount">₹1,02,000</div>
+        <div class="dc-detail">200 DMA breakout confirmations<br>High-conviction additions only<br>After technical recovery confirmed</div>
+      </div>
+      <div class="deploy-card total">
+        <div class="dc-label">Reserve (Opportunistic)</div>
+        <div class="dc-amount">~₹50,000</div>
+        <div class="dc-detail">Hold for 10%+ market correction<br>Deploy into highest-conviction<br>picks if broad market falls</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:13px;font-weight:700;color:var(--slate);margin:16px 0 8px">6A — Phased Deployment Schedule</h3>
+    <div class="tbl-wrap" style="margin-bottom:20px">
+      <table>
+        <thead>
+          <tr>
+            <th>Phase</th>
+            <th>Window</th>
+            <th>Stocks</th>
+            <th>Capital</th>
+            <th>Trigger / Condition</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="phase-pill" style="background:#fef3c7;color:#92400e">Pre-Phase</span></td>
+            <td>This week</td>
+            <td>FCL: Sell 2,000 of 3,700 shares at ₹40+</td>
+            <td class="alloc">~₹80,180 freed</td>
+            <td>Execute immediately at market price. LTCG gain ~₹67K — under ₹1.25L exemption = <strong>zero tax</strong>. Reduces concentration from 11.3% to ~5.7% of stock portfolio.</td>
+          </tr>
+          <tr>
+            <td><span class="phase-pill p1">Phase 1</span></td>
+            <td>Now–30 days</td>
+            <td>COFORGE, NAVINFLUOR, CAMS, LALPATHLAB, MAXHEALTH (starter), SBILIFE (near 52W low), KPITTECH (add)</td>
+            <td class="alloc">₹1,48,000 fresh<br>+₹80K FCL = ₹2,28,000</td>
+            <td>Begin deploying now. FCL proceeds top up NAVINFLUOR (Golden Cross) and LALPATHLAB (above 200 DMA). SBILIFE entry: near 52W low, RSI approaching oversold — good accumulation zone for long-term holder.</td>
+          </tr>
+          <tr>
+            <td><span class="phase-pill p2">Phase 2</span></td>
+            <td>30–90 days</td>
+            <td>All 7 target stocks — add at support / DMA zones</td>
+            <td class="alloc">₹1,60,000</td>
+            <td>Execute only if price pulls back to Phase 2 entry zones (see Section 1). If any stock runs past Phase 1 entry without pullback, skip Phase 2 for that stock and wait for Phase 3 breakout confirmation instead.</td>
+          </tr>
+          <tr>
+            <td><span class="phase-pill p3">Phase 3</span></td>
+            <td>90+ days</td>
+            <td>All 7 stocks — top-up on confirmed 200 DMA crossovers</td>
+            <td class="alloc">₹1,02,000</td>
+            <td>Only execute when stock closes above its 200 DMA on higher-than-average volume for 2+ sessions. This confirms medium-term recovery. Especially important for COFORGE (200 DMA ₹1,548), MAXHEALTH (200 DMA ₹1,071), and SBILIFE (200 DMA ₹1,922).</td>
+          </tr>
+          <tr>
+            <td><span style="background:#fee2e2;color:#991b1b;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600">Reserve</span></td>
+            <td>Opportunistic</td>
+            <td>Any of the 7 target stocks on sharp correction</td>
+            <td class="alloc">~₹50,000</td>
+            <td>Hold back for sudden broad market events (India VIX spike, global selloff, election surprise). Deploy into 1–2 highest-conviction picks if Nifty falls 8–10% from current levels.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size:13px;font-weight:700;color:var(--slate);margin:16px 0 8px">6B — Quarterly Review &amp; Thesis-Breaker Schedule</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Stock</th>
+            <th>Review When</th>
+            <th>Critical Metric to Track</th>
+            <th>Thesis Passes If</th>
+            <th>Action if Metric Misses</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="stock-name">COFORGE</span></td>
+            <td>Q1 FY27 results<br><span class="sub">July 2026</span></td>
+            <td>BFSI vertical QoQ revenue; EBIT margin; deal TCV per quarter</td>
+            <td>BFSI revenue returns to growth; EBIT margin &gt; 13%; deal TCV &gt; $400M/Q</td>
+            <td>Re-evaluate thesis if 2 consecutive quarterly misses. Reduce position on 3rd miss.</td>
+          </tr>
+          <tr>
+            <td><span class="stock-name">KAYNES</span></td>
+            <td>Q2 FY27 results<br><span class="sub">October 2026</span></td>
+            <td>ROCE %; OPM %; Revenue growth quality</td>
+            <td>ROCE &gt; 15% <strong>AND</strong> OPM &gt; 17%</td>
+            <td><strong>Sell entire 3-share position</strong> if thresholds not met by Q2 FY27. Thesis on quality EMS is broken if margins stay below benchmark for 2 years.</td>
+          </tr>
+          <tr>
+            <td><span class="stock-name">KALYANKJIL</span></td>
+            <td>Q1 FY27 results<br><span class="sub">July–August 2026</span></td>
+            <td>SSSG (same-store sales growth); Gross margin; Volume vs value growth</td>
+            <td>SSSG &gt; 5% YoY despite gold duty headwind</td>
+            <td>Maintain WATCH status for another quarter. Downgrade to AVOID if SSSG negative for 2Q.</td>
+          </tr>
+          <tr>
+            <td><span class="stock-name">NAVINFLUOR</span></td>
+            <td>Q2 FY27 results<br><span class="sub">October 2026</span></td>
+            <td>Specialty fluorochemicals revenue %; CDMO order pipeline wins</td>
+            <td>CDMO / MPP revenue &gt; 30% of total; new CDMO contract wins disclosed</td>
+            <td>Re-evaluate if CDMO ramp delayed by &gt; 2 consecutive quarters. May indicate execution issues at Dahej plant.</td>
+          </tr>
+          <tr>
+            <td><span class="stock-name">MAXHEALTH</span></td>
+            <td>Q1 FY27 results<br><span class="sub">August 2026</span></td>
+            <td>Bed occupancy rate %; ARPOB (Avg Revenue Per Occupied Bed); new hospital opening timeline</td>
+            <td>Occupancy &gt; 65%; ARPOB growth &gt; 10% YoY</td>
+            <td>Reduce position size if hospital margins compress for 2Q. Hospital capex cycle may delay profitability.</td>
+          </tr>
+          <tr>
+            <td><span class="stock-name">SBILIFE</span></td>
+            <td>Q1 FY27 results<br><span class="sub">August 2026</span></td>
+            <td>VNB margin %; VNB growth YoY; APE growth; Persistency 13th/61st month</td>
+            <td>VNB margin &gt; 23%; VNB growth &gt; 20% YoY; APE growth &gt; 15%</td>
+            <td>Re-evaluate if VNB margin contracts for 2Q (product mix shift to low-margin ULIP = bad sign). Reconsider position.</td>
+          </tr>
+          <tr>
+            <td><span class="stock-name">KPITTECH</span></td>
+            <td>Q2 FY27 results<br><span class="sub">October 2026</span></td>
+            <td>Revenue growth %; client concentration in top 3 auto OEMs; EV software revenue %</td>
+            <td>Revenue growth &gt; 15%; EV/autonomous software revenue growing as % of total</td>
+            <td>Review full position (existing + additions) if auto OEM capex cuts spread to IT spend for 2 consecutive quarters.</td>
+          </tr>
+          <tr>
+            <td><span class="stock-name">CAMS</span></td>
+            <td>Q2 FY27 results<br><span class="sub">October 2026</span></td>
+            <td>MF industry AUM growth (direct correlation); CAMS market share vs KFIN</td>
+            <td>India MF AUM &gt; ₹75L Cr; CAMS market share stable or growing</td>
+            <td>Re-evaluate if CAMS loses market share to KFIN in 2+ consecutive quarters.</td>
+          </tr>
+          <tr>
+            <td><span class="stock-name">LALPATHLAB</span></td>
+            <td>Q2 FY27 results<br><span class="sub">October 2026</span></td>
+            <td>Revenue per patient; Test volume growth; Franchise expansion (lab count)</td>
+            <td>Revenue per patient growing; Franchise lab count increasing; Volume growth &gt; 12% YoY</td>
+            <td>Re-evaluate if pricing pressure from hospital-integrated labs causes revenue per patient to decline.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- ─────────────── SECTION 7: SOLARINDS CRITERIA ─────────────── -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div class="section-title">SOLARINDS — Criteria to Add Additional Capital</div>
+    </div>
+    <div class="section-desc">
+      SOLARINDS is currently held at <strong>+48% gain (3 shares, avg ₹12,379)</strong> and classified as HOLD with no fresh capital in the main plan. This section defines the exact conditions under which additional capital becomes justified. Key context: as of 9 June 2026, SOLARINDS trades at <strong>₹18,267 (PE 98.9×, MCap ₹1,65,298 Cr)</strong> — only 3.2% from its 52-week high. This is the same valuation concern that excluded CGPOWER from additions. Adding at current levels is <strong>not justified</strong>. The criteria below define when that changes.
+    </div>
+
+    <div class="callout">
+      <span class="callout-icon">⚠️</span>
+      <span><strong>Do not add at current price.</strong> At ₹18,267 and PE 98.9×, the stock is near its all-time high with asymmetric downside risk. Support (S1 ₹12,340) is 32% below current price. All four criteria gates below must be checked before deploying fresh capital.</span>
+    </div>
+
+    <!-- Live data strip -->
+    <div style="display:flex;flex-wrap:wrap;gap:0;background:#1e293b;border-radius:8px 8px 0 0;overflow:hidden;margin-bottom:0;border:1px solid #334155;border-bottom:none;">
+      <div class="stat-box" style="flex:1;min-width:100px"><div class="s-label">LTP (9 Jun)</div><div class="s-val s-white">₹18,267</div></div>
+      <div class="stat-box" style="flex:1;min-width:100px"><div class="s-label">MCap</div><div class="s-val s-white">₹1,65,298 Cr</div></div>
+      <div class="stat-box" style="flex:1;min-width:100px"><div class="s-label">PE (TTM)</div><div class="s-val s-red">98.9×</div></div>
+      <div class="stat-box" style="flex:1;min-width:100px"><div class="s-label">% from 52W High</div><div class="s-val s-amber">−3.2%</div></div>
+      <div class="stat-box" style="flex:1;min-width:100px"><div class="s-label">200 DMA</div><div class="s-val s-blue">₹14,173</div></div>
+      <div class="stat-box" style="flex:1;min-width:100px"><div class="s-label">50 DMA</div><div class="s-val s-blue">₹16,064</div></div>
+      <div class="stat-box" style="flex:1;min-width:100px"><div class="s-label">RSI (14)</div><div class="s-val s-amber">62.48</div></div>
+      <div class="stat-box" style="flex:1;min-width:100px"><div class="s-label">Your Avg Cost</div><div class="s-val s-green">₹12,379</div></div>
+    </div>
+
+    <!-- Gate 1: Valuation -->
+    <h3 style="font-size:13px;font-weight:700;color:var(--slate);margin:20px 0 8px">Gate 1 — Valuation Must Come Down to an Acceptable Range</h3>
+    <div class="tbl-wrap" style="margin-bottom:16px">
+      <table>
+        <thead>
+          <tr><th>Valuation Level</th><th>PE Range</th><th>How You Get There</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Current</strong></td>
+            <td class="price neg">98.9×</td>
+            <td>—</td>
+            <td><span class="badge badge-exclude">Do Not Add</span></td>
+          </tr>
+          <tr>
+            <td>Acceptable minimum</td>
+            <td class="price">65–70×</td>
+            <td>~25–30% price correction OR earnings grow ~35% with flat price</td>
+            <td><span class="badge badge-watch">Watch Zone</span></td>
+          </tr>
+          <tr>
+            <td>Comfortable entry</td>
+            <td class="price pos">50–60×</td>
+            <td>~35–40% price correction OR strong consecutive earnings beats</td>
+            <td><span class="badge badge-buy">Add Zone</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Gate 2: Price -->
+    <h3 style="font-size:13px;font-weight:700;color:var(--slate);margin:20px 0 8px">Gate 2 — Price Must Pull Back to a Technical Accumulation Zone</h3>
+    <div class="tbl-wrap" style="margin-bottom:16px">
+      <table>
+        <thead>
+          <tr><th>Zone</th><th>Price Range</th><th>Basis</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Ideal accumulation</strong></td>
+            <td class="price pos alloc">₹13,500–₹14,500</td>
+            <td>200 DMA (₹14,173) zone</td>
+            <td><span class="badge badge-buy">Strong BUY criteria met</span></td>
+          </tr>
+          <tr>
+            <td>Acceptable entry</td>
+            <td class="price">₹15,500–₹16,500</td>
+            <td>50 DMA (₹16,064) zone — PE still ~85–90× at this level</td>
+            <td><span class="badge badge-watch">Small starter only (₹20–25K) if Gate 3 also met</span></td>
+          </tr>
+          <tr>
+            <td><strong>Current zone</strong></td>
+            <td class="price neg">₹17,500–₹18,874</td>
+            <td>Near ATH · RSI 62 approaching overbought</td>
+            <td><span class="badge badge-exclude">Do Not Add</span></td>
+          </tr>
+          <tr>
+            <td>Stop-loss review</td>
+            <td class="price neg">Below ₹12,000</td>
+            <td>S2 support breakdown</td>
+            <td><span class="badge badge-exclude">Reconsider thesis entirely</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Gate 3: Fundamentals -->
+    <h3 style="font-size:13px;font-weight:700;color:var(--slate);margin:20px 0 8px">Gate 3 — Fundamental Triggers (Business Getting Better)</h3>
+    <div class="tbl-wrap" style="margin-bottom:16px">
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>Current (approx)</th><th>Trigger Level to Add</th><th>Why It Matters</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Defence revenue % of total</strong></td>
+            <td>~30–35%</td>
+            <td class="pos alloc">Crosses 50%</td>
+            <td>Higher-margin, more secular than mining explosives</td>
+          </tr>
+          <tr>
+            <td><strong>Export revenue %</strong></td>
+            <td>Early stage</td>
+            <td class="pos alloc">Becomes &gt;10% of revenue</td>
+            <td>Pinaka + anti-drone exports = massive re-rating signal; not yet priced in</td>
+          </tr>
+          <tr>
+            <td><strong>Order book / Revenue ratio</strong></td>
+            <td>~3–4×</td>
+            <td class="pos alloc">Crosses 5×</td>
+            <td>Exceptional visibility justifies a premium PE; currently standard for the sector</td>
+          </tr>
+          <tr>
+            <td><strong>OPM %</strong></td>
+            <td>~20–22%</td>
+            <td class="pos alloc">Sustained above 20% for 2+ quarters</td>
+            <td>Margin expansion means PAT growth outpaces revenue — earnings upgrade cycle</td>
+          </tr>
+          <tr>
+            <td><strong>New DRDO product qualifications</strong></td>
+            <td>In progress</td>
+            <td class="pos alloc">≥1 major new platform qualified</td>
+            <td>Widens addressable market and reduces revenue concentration in Pinaka</td>
+          </tr>
+          <tr>
+            <td><strong>Mining explosives volume</strong></td>
+            <td>Tied to coal/infra output</td>
+            <td class="pos alloc">Growing YoY (coal production target met)</td>
+            <td>Baseline revenue floor; protects downside if defence order execution is delayed</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Gate 4: Policy -->
+    <h3 style="font-size:13px;font-weight:700;color:var(--slate);margin:20px 0 8px">Gate 4 — Policy / Macro Conditions Must Be Favourable</h3>
+    <div class="tbl-wrap" style="margin-bottom:16px">
+      <table>
+        <thead>
+          <tr><th>Policy Check</th><th>Positive Signal (Supports Adding)</th><th>Negative Signal (Delays Addition)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Union Budget defence capex</strong></td>
+            <td class="pos">Allocation grows &gt;10% YoY</td>
+            <td class="neg">Cut or flatlined</td>
+          </tr>
+          <tr>
+            <td><strong>Negative Import List</strong></td>
+            <td class="pos">New items added covering Solar's product categories</td>
+            <td class="neg">No additions for 2+ years</td>
+          </tr>
+          <tr>
+            <td><strong>Defence exports policy</strong></td>
+            <td class="pos">Approved nations list expanded; Pinaka deal sizes increase</td>
+            <td class="neg">Export targets revised down; geopolitical complications</td>
+          </tr>
+          <tr>
+            <td><strong>Coal / infrastructure capex</strong></td>
+            <td class="pos">Mining output growing; infra projects on schedule</td>
+            <td class="neg">Commodity slowdown reduces commercial explosives demand</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Decision tree -->
+    <h3 style="font-size:13px;font-weight:700;color:var(--slate);margin:20px 0 8px">Add Decision Summary</h3>
+    <div class="tbl-wrap" style="margin-bottom:16px">
+      <table>
+        <thead>
+          <tr><th>Price Zone</th><th>PE (approx)</th><th>Action</th><th>Allocation</th><th>Condition</th></tr>
+        </thead>
+        <tbody>
+          <tr style="background:#fef2f2">
+            <td class="neg"><strong>₹17,500–₹18,874 (current)</strong></td>
+            <td class="neg">~97–100×</td>
+            <td><span class="badge badge-exclude">Do Not Add</span></td>
+            <td>₹0</td>
+            <td>Near ATH, extreme valuation, asymmetric downside</td>
+          </tr>
+          <tr style="background:#fffbeb">
+            <td class="price">₹15,500–₹16,500</td>
+            <td class="price">~83–89×</td>
+            <td><span class="badge badge-watch">Conditional Small</span></td>
+            <td>₹20–25K max</td>
+            <td>Only if Gates 3 + 4 clearly positive (export news / budget)</td>
+          </tr>
+          <tr style="background:#f0fdf4">
+            <td class="pos"><strong>₹13,500–₹14,500</strong></td>
+            <td class="pos"><strong>~65–75×</strong></td>
+            <td><span class="badge badge-buy">Add — Best Zone</span></td>
+            <td><strong>₹40–50K</strong></td>
+            <td>No fundamental deterioration (no budget cut, no earnings miss)</td>
+          </tr>
+          <tr style="background:#fef2f2">
+            <td class="neg">Below ₹12,000</td>
+            <td class="neg">~60×</td>
+            <td><span class="badge badge-exclude">Stop &amp; Reassess</span></td>
+            <td>₹0 until thesis verified</td>
+            <td>S2 support broken — check defence budget, earnings miss, sector change</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Quarterly monitor -->
+    <h3 style="font-size:13px;font-weight:700;color:var(--slate);margin:20px 0 8px">What to Track Quarterly</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Trigger</th><th>Check When</th><th>Source</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Q1 FY27 results — order book, OPM, defence vs mining revenue split</td><td>August 2026</td><td>BSE / NSE filing · Solar Industries IR</td></tr>
+          <tr><td>Pinaka export order updates — new nations, deal size</td><td>Ongoing</td><td>PIB / MoD press releases</td></tr>
+          <tr><td>Union Budget FY27 — defence capital expenditure allocation</td><td>February 2027</td><td>indiabudget.gov.in</td></tr>
+          <tr><td>Negative Import List additions — any new items in Solar's product range</td><td>As announced</td><td>MoD / PIB · Ministry of Defence gazette</td></tr>
+          <tr><td>Coal India / NMDC production targets — proxy for commercial explosives demand</td><td>Quarterly</td><td>Coal India IR · NMDC quarterly reports</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════════════════════════════════ FOOTER ═══ -->
+<footer class="report-footer">
+  <div class="disclaimer-title">⚠ Important Disclaimer</div>
+  <p>This report is generated for <strong>educational and personal research purposes only</strong> and does <strong>NOT</strong> constitute financial advice, investment advice, or a solicitation to buy or sell any security. Equity investments are subject to market risks. Past performance does not guarantee future results.</p>
+  <p style="margin-top:6px">All financial figures (prices, P/E ratios, LTP, 52-week ranges, technical levels) were fetched <strong>live from NSE India, Screener.in, and equivalent public portals on 9 June 2026</strong> using the Market Sage toolset. Figures may change materially after this date. Verify all data independently from primary sources before making any investment decision.</p>
+  <p style="margin-top:6px">LIC of India shareholding is <strong>not</strong> cited or used as a governance signal in this report — per explicit analytical policy (LIC investments are subject to political direction, not independent investment merit). Only private domestic institutional holdings are treated as governance-positive signals.</p>
+  <p style="margin-top:6px">Please consult a <strong>SEBI-registered investment advisor</strong> before making any investment decisions. The analyst has no position in any of the newly recommended stocks (COFORGE, NAVINFLUOR, CAMS, LALPATHLAB, MAXHEALTH, SBILIFE) as of the report date.</p>
+  <p style="margin-top:10px;color:#64748b;font-size:10px">Generated by Market Sage · Anthropic Claude Sonnet 4.6 · 9 June 2026 · Data sources: NSE India, Screener.in, smart-investing.in, Coforge Investor Relations, Tata MF / Groww</p>
+</footer>
+
+</body>
+</html>
