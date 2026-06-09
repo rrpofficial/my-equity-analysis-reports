@@ -1,0 +1,477 @@
+/* ═══════════════════════════════════════════════════════════
+   Market Sage — MkDocs Material Custom Theme
+   Mirrors the visual language of the Market Sage HTML reports
+   Navy: #0f2744  Blue: #1d4ed8  Slate: #334155  BG: #f1f5f9
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Custom Light Color Scheme ─────────────────────────── */
+[data-md-color-scheme="market-sage"] {
+  --md-primary-fg-color:              #0f2744;
+  --md-primary-fg-color--light:       #1e3a5f;
+  --md-primary-fg-color--dark:        #07192e;
+  --md-primary-bg-color:              #ffffff;
+  --md-primary-bg-color--light:       rgba(255, 255, 255, 0.7);
+
+  --md-accent-fg-color:               #1d4ed8;
+  --md-accent-fg-color--transparent:  rgba(29, 78, 216, 0.12);
+  --md-accent-bg-color:               #ffffff;
+
+  --md-default-fg-color:              #0f172a;
+  --md-default-fg-color--light:       rgba(15, 23, 42, 0.54);
+  --md-default-fg-color--lighter:     rgba(15, 23, 42, 0.32);
+  --md-default-fg-color--lightest:    rgba(15, 23, 42, 0.12);
+  --md-default-bg-color:              #f1f5f9;
+  --md-default-bg-color--light:       rgba(241, 245, 249, 0.9);
+  --md-default-bg-color--lighter:     rgba(241, 245, 249, 0.7);
+  --md-default-bg-color--lightest:    rgba(241, 245, 249, 0.4);
+
+  --md-code-fg-color:                 #334155;
+  --md-code-bg-color:                 #e2e8f0;
+
+  --md-typeset-a-color:               #1d4ed8;
+  --md-typeset-mark-color:            rgba(29, 78, 216, 0.15);
+
+  --md-admonition-fg-color:           rgba(15, 23, 42, 0.87);
+  --md-admonition-bg-color:           #ffffff;
+
+  --md-footer-fg-color:               #94a3b8;
+  --md-footer-fg-color--light:        rgba(148, 163, 184, 0.7);
+  --md-footer-bg-color:               #0f2744;
+  --md-footer-bg-color--dark:         #07192e;
+}
+
+/* ── Header ────────────────────────────────────────────── */
+.md-header {
+  background: linear-gradient(135deg, #0f2744 0%, #1e3a5f 100%);
+  border-bottom: 3px solid #3b82f6;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.md-header[data-md-state="shadow"] {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.md-header__title {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* ── Navigation Tabs ───────────────────────────────────── */
+.md-tabs {
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+}
+
+.md-tabs__link {
+  color: rgba(148, 163, 184, 0.9);
+  font-weight: 500;
+}
+
+.md-tabs__link--active,
+.md-tabs__link:focus,
+.md-tabs__link:hover {
+  color: #60a5fa;
+}
+
+/* ── Search ────────────────────────────────────────────── */
+.md-search__form {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+
+.md-search__form:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* ── Sidebar ───────────────────────────────────────────── */
+[data-md-color-scheme="market-sage"] .md-nav__title {
+  color: #0f2744;
+  font-weight: 700;
+}
+
+[data-md-color-scheme="market-sage"] .md-nav__link--active {
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+/* ── Main Content Area ─────────────────────────────────── */
+[data-md-color-scheme="market-sage"] .md-main {
+  background: #f1f5f9;
+}
+
+[data-md-color-scheme="market-sage"] .md-content__inner {
+  background: transparent;
+}
+
+/* ── Typography ────────────────────────────────────────── */
+[data-md-color-scheme="market-sage"] .md-typeset h1 {
+  color: #0f2744;
+  font-weight: 800;
+  border-bottom: 2px solid #cbd5e1;
+  padding-bottom: 0.4em;
+}
+
+[data-md-color-scheme="market-sage"] .md-typeset h2 {
+  color: #1e3a5f;
+  font-weight: 700;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.3em;
+}
+
+[data-md-color-scheme="market-sage"] .md-typeset h3 {
+  color: #334155;
+  font-weight: 700;
+}
+
+[data-md-color-scheme="market-sage"] .md-typeset h4 {
+  color: #475569;
+  font-weight: 700;
+}
+
+[data-md-color-scheme="market-sage"] .md-typeset a {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+[data-md-color-scheme="market-sage"] .md-typeset a:hover {
+  color: #1e40af;
+  text-decoration: underline;
+}
+
+/* ── Tables ────────────────────────────────────────────── */
+[data-md-color-scheme="market-sage"] .md-typeset table:not([class]) {
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  display: table;
+  width: 100%;
+}
+
+[data-md-color-scheme="market-sage"] .md-typeset table:not([class]) thead tr {
+  background: #334155;
+}
+
+[data-md-color-scheme="market-sage"] .md-typeset table:not([class]) thead th {
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+  padding: 10px 14px;
+}
+
+[data-md-color-scheme="market-sage"] .md-typeset table:not([class]) tbody tr:hover {
+  background: #f8fafc;
+}
+
+[data-md-color-scheme="market-sage"] .md-typeset table:not([class]) td {
+  border-color: #e2e8f0;
+  padding: 10px 14px;
+  vertical-align: top;
+}
+
+/* ── Code ──────────────────────────────────────────────── */
+[data-md-color-scheme="market-sage"] .md-typeset code {
+  background: #e2e8f0;
+  color: #334155;
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  font-size: 0.82em;
+  font-weight: 500;
+}
+
+[data-md-color-scheme="market-sage"] .md-typeset pre {
+  background: #1e293b;
+  border-radius: 8px;
+  border: 1px solid #334155;
+}
+
+[data-md-color-scheme="market-sage"] .md-typeset pre > code {
+  background: transparent;
+  color: #e2e8f0;
+}
+
+/* ── Footer ────────────────────────────────────────────── */
+.md-footer {
+  background: #0f2744;
+}
+
+.md-footer-meta {
+  background: #07192e;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ACTION BADGES  (mirrors HTML badge styles exactly)
+   ═══════════════════════════════════════════════════════════ */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  line-height: 1.7;
+}
+
+.badge-buy     { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+.badge-build   { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
+.badge-hold    { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+.badge-trim    { background: #ffedd5; color: #c2410c; border: 1px solid #fdba74; }
+.badge-watch   { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+.badge-exclude { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+.badge-info    { background: #f0f9ff; color: #0c4a6e; border: 1px solid #7dd3fc; }
+
+/* Phase pills */
+.phase-p1 { background: #dcfce7; color: #15803d; border-radius: 10px; padding: 1px 8px; font-size: 10px; font-weight: 600; }
+.phase-p2 { background: #dbeafe; color: #1d4ed8; border-radius: 10px; padding: 1px 8px; font-size: 10px; font-weight: 600; }
+.phase-p3 { background: #ede9fe; color: #6d28d9; border-radius: 10px; padding: 1px 8px; font-size: 10px; font-weight: 600; }
+
+/* P&L colours */
+.pos { color: #15803d !important; font-weight: 600; }
+.neg { color: #b91c1c !important; font-weight: 600; }
+
+/* ═══════════════════════════════════════════════════════════
+   LANDING PAGE COMPONENTS
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Hero Block ────────────────────────────────────────── */
+.ms-hero {
+  background: linear-gradient(135deg, #0f2744 0%, #1e3a5f 100%);
+  border-bottom: 4px solid #3b82f6;
+  border-radius: 10px;
+  color: #ffffff;
+  padding: 40px 48px 32px;
+  margin-bottom: 24px;
+  margin-top: 8px;
+}
+
+.ms-hero h1 {
+  color: #ffffff !important;
+  border-bottom: none !important;
+  font-size: 24px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.3px;
+  margin-bottom: 8px !important;
+  padding-bottom: 0 !important;
+}
+
+.ms-hero p {
+  color: #93c5fd !important;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.ms-hero strong {
+  color: #ffffff;
+}
+
+/* ── Stats Strip ───────────────────────────────────────── */
+.ms-stats-strip {
+  display: flex;
+  flex-wrap: wrap;
+  background: #1e293b;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #334155;
+  margin-bottom: 28px;
+}
+
+.ms-stat {
+  flex: 1;
+  min-width: 130px;
+  padding: 14px 20px;
+  border-right: 1px solid #334155;
+  text-align: center;
+}
+
+.ms-stat:last-child { border-right: none; }
+
+.ms-stat-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #64748b;
+  display: block;
+  font-weight: 500;
+}
+
+.ms-stat-value {
+  font-size: 18px;
+  font-weight: 800;
+  display: block;
+  margin-top: 3px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.sv-green  { color: #4ade80; }
+.sv-blue   { color: #60a5fa; }
+.sv-amber  { color: #fbbf24; }
+.sv-white  { color: #f8fafc; }
+.sv-red    { color: #f87171; }
+
+/* ── Category Badges (Index Table) ────────────────────── */
+.ms-cat-badge {
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
+.cat-action-plan   { background: #dcfce7; color: #15803d; }
+.cat-portfolio     { background: #dbeafe; color: #1e40af; }
+.cat-sector        { background: #ede9fe; color: #6d28d9; }
+.cat-macro         { background: #fef3c7; color: #92400e; }
+.cat-watchlist     { background: #ffedd5; color: #c2410c; }
+.cat-analysis      { background: #f0f9ff; color: #0c4a6e; }
+
+/* ── Year Section Headers in Reports Index ─────────────── */
+.ms-year-band {
+  background: linear-gradient(90deg, #0f2744, #1e3a5f);
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  border-left: 4px solid #3b82f6;
+  margin: 20px 0 8px;
+  display: block;
+}
+
+/* ── Report Row Cards ──────────────────────────────────── */
+.ms-report-row {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-left: 4px solid #1d4ed8;
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.15s ease, border-left-color 0.15s ease;
+}
+
+.ms-report-row:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-left-color: #3b82f6;
+}
+
+/* ── Callout Boxes ─────────────────────────────────────── */
+.ms-callout {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-left: 4px solid #f59e0b;
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin: 10px 0 14px;
+  font-size: 13px;
+  color: #78350f;
+}
+
+.ms-callout-info {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  border-left-color: #3b82f6;
+  color: #1e3a5f;
+}
+
+.ms-callout-success {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  border-left-color: #16a34a;
+  color: #14532d;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REPORT PAGE COMPONENTS  (for individual report pages)
+   ═══════════════════════════════════════════════════════════ */
+
+/* Monospaced price / number cells */
+.price {
+  font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 12px;
+}
+
+/* Deploy / allocation cards */
+.ms-deploy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.ms-deploy-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-top: 3px solid #1d4ed8;
+  border-radius: 8px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.ms-deploy-card.phase1 { border-top-color: #16a34a; }
+.ms-deploy-card.phase2 { border-top-color: #2563eb; }
+.ms-deploy-card.phase3 { border-top-color: #7c3aed; }
+.ms-deploy-card.reserve { border-top-color: #dc2626; }
+.ms-deploy-card.fcl    { border-top-color: #d97706; }
+
+.ms-deploy-card .dc-label  { font-size: 10px; text-transform: uppercase; letter-spacing: 0.7px; color: #64748b; }
+.ms-deploy-card .dc-amount { font-size: 22px; font-weight: 800; color: #0f2744; margin: 4px 0 2px; }
+.ms-deploy-card .dc-detail { font-size: 11px; color: #64748b; line-height: 1.6; }
+
+/* ── Responsive ────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .ms-hero {
+    padding: 24px 20px 20px;
+    border-radius: 8px;
+  }
+
+  .ms-hero h1 {
+    font-size: 19px !important;
+  }
+
+  .ms-stats-strip {
+    flex-direction: column;
+  }
+
+  .ms-stat {
+    border-right: none;
+    border-bottom: 1px solid #334155;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .ms-stat-value {
+    font-size: 15px;
+  }
+
+  .ms-deploy-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ── Print ─────────────────────────────────────────────── */
+@media print {
+  .ms-hero,
+  .ms-stats-strip,
+  [data-md-color-scheme="market-sage"] .md-typeset table:not([class]) thead tr {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .md-header,
+  .md-tabs,
+  .md-sidebar,
+  .md-footer {
+    display: none !important;
+  }
+}
