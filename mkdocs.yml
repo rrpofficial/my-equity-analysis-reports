@@ -78,6 +78,7 @@ nav:
   - Reports:
     - "2026":
       - "June 2026":
+        - reports/2026/june/mcx-equity-analysis-9jun2026.md
         - reports/2026/june/market-sage-action-plan-9jun2026.md
   # END_REPORTS_NAV
 

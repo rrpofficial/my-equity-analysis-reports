@@ -17,7 +17,7 @@ Personal equity research powered by **Market Sage** · Indian Markets
 <div class="ms-stats-strip">
   <div class="ms-stat">
     <span class="ms-stat-label">Total Reports</span>
-    <span class="ms-stat-value sv-blue">1</span>
+    <span class="ms-stat-value sv-blue">2</span>
   </div>
   <div class="ms-stat">
     <span class="ms-stat-label">Latest Report</span>
@@ -29,11 +29,11 @@ Personal equity research powered by **Market Sage** · Indian Markets
   </div>
   <div class="ms-stat">
     <span class="ms-stat-label">Tickers Tracked</span>
-    <span class="ms-stat-value sv-amber">20</span>
+    <span class="ms-stat-value sv-amber">21</span>
   </div>
   <div class="ms-stat">
     <span class="ms-stat-label">Report Types</span>
-    <span class="ms-stat-value sv-green">1</span>
+    <span class="ms-stat-value sv-green">2</span>
   </div>
 </div>
 <!-- END_STATS -->
@@ -49,6 +49,7 @@ Personal equity research powered by **Market Sage** · Indian Markets
 
 | Date | Report | Category | Tickers | Description |
 |------|--------|----------|---------|-------------|
+| 9 Jun | [MCX — Multi Commodity Exchange: Comprehensive Equity Analysis](reports/2026/june/mcx-equity-analysis-9jun2026.md) | `analysis` | MCX, BSE, CDSL, +1 more | Full fundamental, technical, governance & forensic analysis of MCX (NSE: MCX). Verdict… |
 | 9 Jun | [Market Sage — Indian Stock Action Plan](reports/2026/june/market-sage-action-plan-9jun2026.md) | `action-plan` | COFORGE, NAVINFLUOR, +18 more | Six new positions across BFSI-IT, Specialty Chemicals, Capital Markets, Diagnostics, Ho… |
 <!-- END_REPORTS_INDEX -->
 
