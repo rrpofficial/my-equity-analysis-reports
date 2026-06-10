@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCX — Equity Analysis Report | 9 June 2026</title>
+<style>
+  :root {
+    --navy:      #0f2744;
+    --navy-mid:  #1e3a5f;
+    --blue:      #1d4ed8;
+    --slate:     #334155;
+    --slate-lt:  #475569;
+    --bg:        #f1f5f9;
+    --bg-card:   #ffffff;
+    --border:    #cbd5e1;
+    --text:      #0f172a;
+    --text-muted:#64748b;
+    --buy:       #15803d;
+    --buy-bg:    #dcfce7;
+    --build:     #0369a1;
+    --build-bg:  #e0f2fe;
+    --hold:      #1e40af;
+    --hold-bg:   #dbeafe;
+    --trim:      #c2410c;
+    --trim-bg:   #ffedd5;
+    --watch:     #92400e;
+    --watch-bg:  #fef3c7;
+    --exclude:   #991b1b;
+    --exclude-bg:#fee2e2;
+    --pos:       #15803d;
+    --neg:       #b91c1c;
+    --amber:     #92400e;
+    --amber-bg:  #fef3c7;
+    --green:     #14532d;
+    --green-bg:  #dcfce7;
+    --orange:    #7c2d12;
+    --orange-bg: #ffedd5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* ── HEADER ── */
+  .report-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    color: #fff;
+    padding: 32px 40px 24px;
+    border-bottom: 4px solid #3b82f6;
+  }
+  .report-header h1 { font-size: 22px; font-weight: 700; letter-spacing: 0.3px; margin-bottom: 4px; }
+  .report-header .subtitle { font-size: 13px; color: #93c5fd; margin-bottom: 20px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 16px; }
+  .meta-item { display: flex; flex-direction: column; gap: 2px; }
+  .meta-item .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: #93c5fd; }
+  .meta-item .value { font-size: 15px; font-weight: 700; color: #fff; }
+
+  /* ── STATS STRIP ── */
+  .stats-strip {
+    display: flex; flex-wrap: wrap; gap: 0;
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+  }
+  .stat-box {
+    flex: 1; min-width: 120px;
+    padding: 12px 20px;
+    border-right: 1px solid #334155;
+    text-align: center;
+  }
+  .stat-box:last-child { border-right: none; }
+  .stat-box .s-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.7px; color: #64748b; }
+  .stat-box .s-val   { font-size: 16px; font-weight: 700; margin-top: 2px; }
+  .s-green { color: #4ade80; }
+  .s-amber { color: #fbbf24; }
+  .s-red   { color: #f87171; }
+  .s-blue  { color: #60a5fa; }
+  .s-white { color: #f8fafc; }
+
+  /* ── MAIN CONTENT ── */
+  .content { padding: 28px 40px; max-width: 1600px; margin: 0 auto; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 36px; }
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 10px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-num {
+    width: 28px; height: 28px;
+    background: var(--navy); color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; flex-shrink: 0;
+  }
+  .section-title { font-size: 16px; font-weight: 700; color: var(--navy); }
+  .section-desc {
+    font-size: 12px; color: var(--text-muted);
+    margin-bottom: 12px; line-height: 1.6;
+    background: #f8fafc;
+    border-left: 3px solid #3b82f6;
+    padding: 8px 12px;
+    border-radius: 0 4px 4px 0;
+  }
+  .section-desc strong { color: var(--slate); }
+
+  /* ── SUB-HEADER ── */
+  .sub-header {
+    font-size: 13px; font-weight: 700; color: var(--slate);
+    margin: 16px 0 8px;
+  }
+
+  /* ── TABLE ── */
+  .tbl-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.07); margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; background: var(--bg-card); }
+  thead tr { background: var(--slate); color: #fff; }
+  thead th {
+    padding: 9px 12px; text-align: left;
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;
+  }
+  tbody tr { border-bottom: 1px solid #e2e8f0; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #f8fafc; }
+  td { padding: 9px 12px; vertical-align: top; font-size: 12px; line-height: 1.5; }
+  .stock-name { font-weight: 700; font-size: 13px; color: var(--navy); }
+  .sub { display: block; font-size: 10px; color: var(--text-muted); font-weight: 400; margin-top: 1px; }
+  .num { font-family: 'SF Mono','Fira Code','Consolas',monospace; font-size: 12px; }
+  .bold { font-weight: 700; }
+  .tbl-highlight { background: #fffbeb !important; }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 20px;
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;
+  }
+  .badge-buy     { background: var(--buy-bg);     color: var(--buy);     border: 1px solid #86efac; }
+  .badge-hold    { background: var(--hold-bg);    color: var(--hold);    border: 1px solid #93c5fd; }
+  .badge-watch   { background: var(--watch-bg);   color: var(--watch);   border: 1px solid #fcd34d; }
+  .badge-exclude { background: var(--exclude-bg); color: var(--exclude); border: 1px solid #fca5a5; }
+  .badge-trim    { background: var(--trim-bg);    color: var(--trim);    border: 1px solid #fdba74; }
+
+  /* MRS badges */
+  .badge-mrs-green  { background: #dcfce7; color: #14532d; border: 1px solid #86efac; }
+  .badge-mrs-amber  { background: #fef3c7; color: #78350f; border: 1px solid #fcd34d; }
+  .badge-mrs-orange { background: #ffedd5; color: #7c2d12; border: 1px solid #fdba74; }
+  .badge-mrs-red    { background: #fee2e2; color: #7f1d1d; border: 1px solid #fca5a5; }
+
+  /* ── NUMBERS ── */
+  .pos { color: var(--pos); font-weight: 600; }
+  .neg { color: var(--neg); font-weight: 600; }
+  .alloc { font-weight: 700; color: var(--navy); }
+
+  /* ── VERDICT SCORECARD ── */
+  .scorecard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px; margin: 16px 0;
+  }
+  .score-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px;
+    border-top: 3px solid var(--blue);
+  }
+  .score-card.good  { border-top-color: #16a34a; }
+  .score-card.fair  { border-top-color: #2563eb; }
+  .score-card.low   { border-top-color: #d97706; }
+  .sc-dim   { font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); }
+  .sc-score { font-size: 26px; font-weight: 800; color: var(--navy); margin: 4px 0 2px; }
+  .sc-weight { font-size: 11px; color: var(--text-muted); }
+  .sc-note   { font-size: 11px; color: var(--slate-lt); margin-top: 4px; line-height: 1.4; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    display: flex; gap: 10px;
+    background: #fffbeb; border: 1px solid #fde68a;
+    border-left: 4px solid #f59e0b;
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px; margin: 10px 0 14px;
+    font-size: 12px; color: #78350f;
+  }
+  .callout-icon { font-size: 16px; flex-shrink: 0; }
+  .callout-green { background: #f0fdf4; border-color: #bbf7d0; border-left-color: #16a34a; color: #14532d; }
+  .callout-blue  { background: #eff6ff; border-color: #bfdbfe; border-left-color: #2563eb; color: #1e3a8a; }
+  .callout-red   { background: #fef2f2; border-color: #fecaca; border-left-color: #dc2626; color: #7f1d1d; }
+
+  /* ── MRS BLOCK ── */
+  .mrs-block {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 18px; border-radius: 8px;
+    margin: 10px 0; border: 2px solid;
+  }
+  .mrs-amber { background: #fffbeb; border-color: #fde68a; }
+  .mrs-icon  { font-size: 28px; flex-shrink: 0; }
+  .mrs-title { font-size: 14px; font-weight: 700; }
+  .mrs-desc  { font-size: 12px; margin-top: 2px; color: var(--slate-lt); }
+
+  /* ── ADTV TREND ── */
+  .adtv-strip {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px; margin: 12px 0 16px;
+  }
+  .adtv-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px;
+    border-left: 4px solid #3b82f6;
+  }
+  .adtv-card.gold-card  { border-left-color: #d97706; }
+  .adtv-card.opt-card   { border-left-color: #7c3aed; }
+  .adtv-card.prem-card  { border-left-color: #16a34a; }
+  .ac-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); }
+  .ac-val   { font-size: 18px; font-weight: 800; color: var(--navy); margin: 4px 0 2px; }
+  .ac-growth { font-size: 12px; font-weight: 600; }
+
+  /* ── WATCHLIST ENTRY ── */
+  .watchlist-block {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden; margin-top: 10px;
+  }
+  .wl-header {
+    background: var(--navy); color: #fff;
+    padding: 10px 16px; font-size: 13px; font-weight: 700;
+  }
+  .wl-header .wl-ticker { color: #93c5fd; margin-right: 6px; }
+
+  /* ── FINAL VERDICT BANNER ── */
+  .verdict-banner {
+    background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 100%);
+    color: #fff; border-radius: 10px;
+    padding: 20px 24px; margin: 20px 0;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .vb-left .vb-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.7px; color: #93c5fd; }
+  .vb-left .vb-verdict { font-size: 26px; font-weight: 800; margin-top: 4px; }
+  .vb-left .vb-sub { font-size: 12px; color: #bfdbfe; margin-top: 4px; }
+  .vb-right { text-align: right; }
+  .vb-right .vb-score { font-size: 36px; font-weight: 800; }
+  .vb-right .vb-score-label { font-size: 11px; color: #93c5fd; }
+
+  /* ── ROW SHADING ── */
+  tr.row-good { background: #f0fdf4 !important; }
+  tr.row-warn { background: #fffbeb !important; }
+  tr.row-bad  { background: #fef2f2 !important; }
+
+  /* ── FOOTER ── */
+  .report-footer {
+    background: var(--navy); color: #94a3b8;
+    padding: 20px 40px; font-size: 11px; line-height: 1.7; margin-top: 20px;
+  }
+  .report-footer strong { color: #cbd5e1; }
+  .disclaimer-title { color: #e2e8f0; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+
+  @media print {
+    body { background: #fff; font-size: 11px; }
+    .report-header { padding: 16px 20px; }
+    .content { padding: 16px 20px; }
+    .section { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ HEADER ═══ -->
+<header class="report-header">
+  <h1>MCX — Multi Commodity Exchange of India Limited</h1>
+  <div class="subtitle">Comprehensive Equity Research Report · NSE: MCX | BSE: 534091 · Powered by Market Sage Skill</div>
+  <div class="meta-row">
+    <div class="meta-item"><span class="label">Report Date</span><span class="value">9 June 2026</span></div>
+    <div class="meta-item"><span class="label">CMP</span><span class="value">₹2,824.80</span></div>
+    <div class="meta-item"><span class="label">Market Cap</span><span class="value">₹71,895 Cr</span></div>
+    <div class="meta-item"><span class="label">Category</span><span class="value">Large Cap</span></div>
+    <div class="meta-item"><span class="label">Sector</span><span class="value">Exchange Infrastructure</span></div>
+    <div class="meta-item"><span class="label">FY26 PAT</span><span class="value" style="color:#4ade80">₹1,332 Cr (+138%)</span></div>
+    <div class="meta-item"><span class="label">Verdict</span><span class="value" style="color:#93c5fd">HOLD / Accum. Dips</span></div>
+    <div class="meta-item"><span class="label">Data Source</span><span class="value">Live · Screener.in / NSE</span></div>
+  </div>
+</header>
+
+<!-- ═══════════════════ STATS STRIP ═══ -->
+<div class="stats-strip">
+  <div class="stat-box"><div class="s-label">CMP (9 Jun)</div><div class="s-val s-white">₹2,824.80</div></div>
+  <div class="stat-box"><div class="s-label">P/E (TTM FY26)</div><div class="s-val s-amber">54.1×</div></div>
+  <div class="stat-box"><div class="s-label">P/B</div><div class="s-val s-amber">25.3×</div></div>
+  <div class="stat-box"><div class="s-label">ROE (FY26)</div><div class="s-val s-green">56.3%</div></div>
+  <div class="stat-box"><div class="s-label">ROCE (FY26)</div><div class="s-val s-green">71.4%</div></div>
+  <div class="stat-box"><div class="s-label">OPM (FY26)</div><div class="s-val s-green">71%</div></div>
+  <div class="stat-box"><div class="s-label">Debt/Equity</div><div class="s-val s-green">~0</div></div>
+  <div class="stat-box"><div class="s-label">MRS</div><div class="s-val s-amber">🟡 AMBER</div></div>
+  <div class="stat-box"><div class="s-label">Score</div><div class="s-val s-blue">7.45 / 10</div></div>
+  <div class="stat-box"><div class="s-label">Verdict</div><div class="s-val s-blue">HOLD</div></div>
+</div>
+
+<!-- ═══════════════════ CONTENT ═══ -->
+<main class="content">
+
+  <!-- ─── CRITICAL CONTEXT ─── -->
+  <div class="callout callout-blue" style="margin-bottom:24px">
+    <span class="callout-icon">ℹ️</span>
+    <div>
+      <strong>Critical Structural Facts</strong><br>
+      1. <strong>Zero promoter holding</strong> — FTIL (63 Moons) was ordered by SEBI to divest after the 2013 NSEL default. MCX is 100% institutionally/publicly held — zero promoter diversion risk.<br>
+      2. <strong>SEBI-regulated MII</strong> — Board, risk, technology, and governance under continuous SEBI oversight. The strongest oversight regime for any listed Indian entity.<br>
+      3. <strong>NSEL legacy resolved</strong> — MCX was cleared of direct culpability. The historical overhang is no longer a live issue.
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 1: CORPORATE GOVERNANCE ═══ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title">Corporate Governance — Mandatory First Check</div>
+    </div>
+    <div class="section-desc">
+      Per framework: governance is assessed <strong>before</strong> all financial metrics. Poor governance invalidates financial analysis. MCX has the strongest governance profile possible for an Indian listed company — no promoter means zero diversion risk, and SEBI's MII oversight framework provides regulatory backstop.
+    </div>
+
+    <h3 class="sub-header">1.1 Board &amp; Management</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Aspect</th><th>Finding</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr class="row-good"><td>Promoter holding</td><td><strong>0%</strong> — No promoter. Purely institutional/public ownership.</td><td class="pos">✅ No pledge risk</td></tr>
+          <tr class="row-good"><td>Promoter pledge</td><td>Not applicable</td><td class="pos">✅ N/A</td></tr>
+          <tr class="row-good"><td>Independent directors</td><td>SEBI-mandated composition for MIIs (majority independent)</td><td class="pos">✅ Compliant</td></tr>
+          <tr class="row-good"><td>CEO-Chairman separation</td><td>Yes — Professional management; SEBI-vetted CEO appointment process</td><td class="pos">✅</td></tr>
+          <tr class="row-good"><td>Statutory Auditor</td><td><strong>Shah Gupta &amp; Co.</strong> (completing 2nd term) → transitioning to <strong>M/s V Sankar Aiyar &amp; Co.</strong> (FRA: 109208W), approved at May 8, 2025 board meeting</td><td class="pos">✅ Planned rotation</td></tr>
+          <tr class="row-good"><td>Auditor resignation</td><td>None — Change is SEBI-mandated statutory rotation after two full terms. NOT a mid-term resignation.</td><td class="pos">✅ Clean</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-header">1.2 Governance Red Flags</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Red Flag Area</th><th>Finding</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr class="row-good"><td>Related party transactions</td><td>No material RPTs with promoter-related entities (no promoter exists). Normal operational RPTs with MCXCCL (regulated clearing corp, SEBI-overseen)</td><td class="pos">✅ Clean</td></tr>
+          <tr class="row-good"><td>Tax disputes / penalties</td><td>MCXCCL (subsidiary): ₹9.97 Cr IT demand notice (March 2026, being contested). Immaterial vs ₹2,848 Cr net worth.</td><td class="pos">✅ Immaterial</td></tr>
+          <tr class="row-good"><td>SEBI actions</td><td>MCXCCL: ₹50 lakh penalty for Dec 2025 technical glitch → transferred to Core SGF. No adverse action against MCX Ltd itself.</td><td class="pos">✅ Minor only</td></tr>
+          <tr class="row-good"><td>Auditor qualifications</td><td>No adverse or qualified opinion found</td><td class="pos">✅ Clean</td></tr>
+          <tr class="row-good"><td>NSEL legacy</td><td>MCX cleared of direct culpability; FTIL/63 Moons fully exited; historical overhang resolved</td><td class="pos">✅ Resolved</td></tr>
+          <tr class="row-good"><td>Contingent liabilities</td><td>MCXCCL ₹9.97 Cr IT demand (immaterial). No large disputes found.</td><td class="pos">✅ Immaterial</td></tr>
+          <tr class="row-good"><td>Pledge</td><td>Zero — no promoter to pledge</td><td class="pos">✅</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-green">
+      <span class="callout-icon">✅</span>
+      <span><strong>Governance Score: STRONG.</strong> MCX has the strongest possible governance profile: no promoter (zero fund-diversion risk), direct SEBI oversight as an MII, professional board, and a planned (not forced) auditor rotation. The only structural consideration is the absence of a strategic anchor shareholder — mitigated by SEBI's power to approve all governance changes at exchanges.</span>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 2: BUSINESS & FINANCIALS ═══ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title">Business Overview &amp; Financial Performance</div>
+    </div>
+    <div class="section-desc">
+      MCX is India's <strong>national monopoly commodity derivatives exchange</strong> — 95.9%+ market share in non-agri commodities. Revenue = ADTV × fee rate (basis points). The business model has <strong>extreme operating leverage</strong>: 107% revenue growth → 138% PAT growth in FY26. The FY22-24 trough was entirely explained by the platform transition (Project Udaan: TCS/Deutsche Boerse T7 platform). FY25-26 represents post-transition normalization + volume acceleration.
+    </div>
+
+    <h3 class="sub-header">2.1 Annual P&amp;L — 7-Year History</h3>
+    <p style="font-size:11px;color:var(--text-muted);margin-bottom:8px">Source: Screener.in consolidated, fetched 9 June 2026</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Year</th><th>Revenue (₹Cr)</th><th>Op. Profit (₹Cr)</th><th>OPM%</th><th>Net Profit (₹Cr)</th><th>EPS (₹)</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>FY20</td><td class="num">398</td><td class="num">178</td><td>45%</td><td class="num">236</td><td class="num">9.27</td><td><span style="font-size:11px;color:var(--text-muted)">Pre-transition</span></td></tr>
+          <tr><td>FY21</td><td class="num">391</td><td class="num">185</td><td>47%</td><td class="num">225</td><td class="num">8.83</td><td></td></tr>
+          <tr><td>FY22</td><td class="num">367</td><td class="num">161</td><td>44%</td><td class="num">143</td><td class="num">5.63</td><td><span style="font-size:11px;color:#d97706">Platform transition begins</span></td></tr>
+          <tr><td>FY23</td><td class="num">514</td><td class="num">145</td><td>28%</td><td class="num">149</td><td class="num">5.84</td><td><span style="font-size:11px;color:#d97706">TCS platform build costs</span></td></tr>
+          <tr class="row-bad"><td><strong>FY24</strong></td><td class="num neg">684</td><td class="num neg">63</td><td class="neg">9%</td><td class="num neg">83</td><td class="num neg">3.26</td><td><span style="font-size:11px;color:#b91c1c">SEBI halt; platform disruption trough</span></td></tr>
+          <tr class="row-warn"><td><strong>FY25</strong></td><td class="num">1,113</td><td class="num">665</td><td>60%</td><td class="num">560</td><td class="num">21.96</td><td><span style="font-size:11px;color:#d97706">Recovery — platform live</span></td></tr>
+          <tr class="row-good"><td><strong>FY26</strong></td><td class="num bold pos">2,302</td><td class="num bold pos">1,642</td><td class="bold pos">71%</td><td class="num bold pos">1,332</td><td class="num bold pos">52.22</td><td><span style="font-size:11px;color:#15803d">Breakout year</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-header">2.2 Profitability &amp; Growth</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="tbl-wrap" style="margin-bottom:0">
+        <table>
+          <thead><tr><th>Metric</th><th>FY26</th><th>FY25</th><th>FY24</th></tr></thead>
+          <tbody>
+            <tr><td>ROE (%)</td><td class="num bold pos">56.3</td><td class="num">31.2</td><td class="num neg">5.9</td></tr>
+            <tr><td>ROCE (%)</td><td class="num bold pos">71.4</td><td class="num">~40</td><td class="num neg">~8</td></tr>
+            <tr><td>OPM (%)</td><td class="num bold pos">71</td><td class="num">60</td><td class="num neg">9</td></tr>
+            <tr><td>Net Margin (%)</td><td class="num bold pos">57.9</td><td class="num">50.3</td><td class="num neg">12.1</td></tr>
+            <tr><td>CFO / PAT</td><td class="num bold pos">2.28×</td><td class="num">1.70×</td><td class="num">5.3×</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tbl-wrap" style="margin-bottom:0">
+        <table>
+          <thead><tr><th>Growth Metric</th><th>3Y CAGR</th><th>5Y CAGR</th><th>10Y CAGR</th></tr></thead>
+          <tbody>
+            <tr><td>Revenue</td><td class="num bold pos">65%</td><td class="num pos">43%</td><td class="num">26%</td></tr>
+            <tr><td>Operating Profit</td><td class="num bold pos">117%</td><td class="num pos">59%</td><td class="num">—</td></tr>
+            <tr><td>Net Profit</td><td class="num bold pos">108%</td><td class="num pos">49%</td><td class="num">31%</td></tr>
+            <tr><td>EPS</td><td class="num bold pos">108%</td><td class="num pos">49%</td><td class="num">31%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h3 class="sub-header" style="margin-top:20px">2.3 ADTV Trajectory — The Core Revenue Driver</h3>
+    <div class="adtv-strip">
+      <div class="adtv-card gold-card">
+        <div class="ac-label">Futures ADT — FY26 Full Year</div>
+        <div class="ac-val">₹64,407 Cr/day</div>
+        <div class="ac-growth pos">+137% YoY (vs ₹27,153 Cr FY25)</div>
+      </div>
+      <div class="adtv-card opt-card">
+        <div class="ac-label">Options Notional ADT — FY26</div>
+        <div class="ac-val">₹4,71,641 Cr/day</div>
+        <div class="ac-growth pos">+146% YoY (vs ₹1,91,909 Cr FY25)</div>
+      </div>
+      <div class="adtv-card prem-card">
+        <div class="ac-label">Options Premium ADT — FY26</div>
+        <div class="ac-val">₹6,534 Cr/day</div>
+        <div class="ac-growth pos">+109% YoY — KEY revenue driver</div>
+      </div>
+      <div class="adtv-card">
+        <div class="ac-label">Q4 FY26 (Jan–Mar) Peak ADT</div>
+        <div class="ac-val">₹5.4L Cr/day</div>
+        <div class="ac-growth pos">Futures: ₹90,199 Cr/day (+111% YoY)</div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--text-muted);margin-top:-8px">Gold (43%) + Silver (34%) = 77% of futures turnover. Energy (crude/nat gas) = 14%. Copper 7%. The options premium ADT growth (+109% YoY full year; +223% YoY in Q4 alone) is the most important metric — this is what drives revenue, not notional.</p>
+  </section>
+
+  <!-- ═══ SECTION 3: SHAREHOLDING ═══ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title">Shareholding Pattern</div>
+    </div>
+    <div class="section-desc">Source: Screener.in + Trendlyne, fetched 9 June 2026. <strong>MCX has ZERO promoter holding</strong> — it is purely institutionally and publicly held. Kotak Mahindra Bank (~15%) is the single largest institutional holder. FII holdings surged from 20.6% to 26.1% in Q4 FY26 — strong foreign conviction post-results.</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Holder</th><th>Mar 2026</th><th>Dec 2025</th><th>Sep 2025</th><th>Jun 2025</th><th>Trend</th></tr></thead>
+        <tbody>
+          <tr><td class="bold">Promoter</td><td class="num bold">0%</td><td class="num">0%</td><td class="num">0%</td><td class="num">0%</td><td style="font-size:11px">Stable (no promoter exists)</td></tr>
+          <tr class="row-good"><td class="bold">FII / FPI</td><td class="num bold pos">26.07%</td><td class="num">20.64%</td><td class="num">19.00%</td><td class="num">21.69%</td><td class="pos" style="font-size:11px">↑ Strong FII inflow Q4 FY26</td></tr>
+          <tr><td class="bold">DII (total)</td><td class="num bold">54.4%</td><td class="num">59.16%</td><td class="num">60.50%</td><td class="num">59.09%</td><td style="font-size:11px">↓ Slight rebalancing</td></tr>
+          <tr><td style="padding-left:20px">↳ Mutual Funds</td><td class="num">33.98%</td><td class="num">36.85%</td><td class="num">37.34%</td><td class="num">36.42%</td><td style="font-size:11px">Slightly declining</td></tr>
+          <tr><td class="bold">Public / Retail</td><td class="num">19.4%</td><td class="num">20.03%</td><td class="num">20.31%</td><td class="num">19.03%</td><td style="font-size:11px">Stable</td></tr>
+          <tr class="row-good"><td colspan="5"><strong>Kotak Mahindra Bank:</strong> ~15% of shares (single largest institutional holder)</td><td></td></tr>
+          <tr class="row-good"><td colspan="5"><strong>Total Institutional Ownership (FII + DII):</strong> <span class="bold pos">80.4%</span> — very high institutional confidence</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 4: FORENSIC SCREEN ═══ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title">Forensic Accounting &amp; Governance Quality (MRS)</div>
+    </div>
+    <div class="section-desc">Based on Schilit's <em>Financial Shenanigans</em> &amp; O'Glove's <em>Quality of Earnings</em>. The automated tool flagged 🔴 RED (two flags). After contextual analysis, both flags are explained by the documented platform transition. Context-adjusted rating is <strong>🟡 AMBER</strong>.</div>
+
+    <div class="callout callout-green" style="margin-bottom:12px">
+      <span class="callout-icon">🔍</span>
+      <span><strong>Hard Reject Check: PASS.</strong> No triggers for: auditor mid-term resignation, adverse opinion, RPT auditor qualification, or contingent liabilities &gt; net worth. All four hard reject filters are clean.</span>
+    </div>
+
+    <div class="mrs-block mrs-amber">
+      <div class="mrs-icon">🟡</div>
+      <div>
+        <div class="mrs-title">Manipulation Risk Score: AMBER — Caution (Monitor)</div>
+        <div class="mrs-desc">Two automated Red flags detected. Both explained by the documented Project Udaan platform transition (TCS platform, FY22-24). Underlying earnings quality is HIGH (CFO/PAT = 2.28×). No hard reject triggers.</div>
+      </div>
+    </div>
+
+    <h3 class="sub-header">Flag Explanation &amp; Context</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Flag</th><th>Tool Output</th><th>Context-Adjusted</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr class="row-warn">
+            <td><strong>DSO-Revenue Divergence — FY24</strong></td>
+            <td><span class="badge badge-exclude">🔴 Red</span></td>
+            <td><span class="badge badge-watch">⚠ Amber</span></td>
+            <td>DSO jumped 10→33 days during Oct 2023 TCS platform migration when SEBI temporarily halted the transition. Disrupted settlement cycles caused temporary receivable buildup. DSO recovered to 9 days (FY25) and 17 days (FY26) — no sustained pattern. <strong>One-time operational disruption, not revenue manipulation.</strong></td>
+          </tr>
+          <tr class="row-warn">
+            <td><strong>CWIP Aging — FY22 (37.8%) &amp; FY23 (53%)</strong></td>
+            <td><span class="badge badge-exclude">🔴 Red</span></td>
+            <td><span class="badge badge-watch">⚠ Amber</span></td>
+            <td>CWIP of ₹95 Cr (FY22) and ₹169 Cr (FY23) is exactly the Project Udaan T7 platform under construction. CWIP fell sharply to ₹16 Cr in FY24 — asset was capitalized upon completion. <strong>Confirmed infrastructure investment with documented completion, not stalled CWIP.</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-header">Full Forensic Scorecard</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Check</th><th>Status</th><th>Finding</th></tr></thead>
+        <tbody>
+          <tr><td>1.1 DSO-Revenue Divergence</td><td><span class="badge badge-watch">⚠ Amber</span></td><td>FY24 spike explained by platform transition; recovered in FY25-26</td></tr>
+          <tr class="row-good"><td>1.2 Unbilled Revenue</td><td><span class="badge badge-buy">✅ Clean</span></td><td>Exchange business — no long-term contracts requiring unbilled booking</td></tr>
+          <tr class="row-good"><td>1.3 DIO-Margin Decoupling</td><td><span class="badge badge-buy">✅ N/A</span></td><td>No inventory (financial exchange)</td></tr>
+          <tr><td>1.4 CWIP Aging</td><td><span class="badge badge-watch">⚠ Amber</span></td><td>FY22-23 CWIP = Project Udaan; capitalized FY24. Verified one-time event.</td></tr>
+          <tr class="row-good"><td>2.1 CFO vs Net Profit</td><td><span class="badge badge-mrs-green">✅ Green</span></td><td>FY26 CFO/PAT = 2.28×. Excellent cash quality. O'Glove benchmark: >1.0 over rolling 3Y. ✅</td></tr>
+          <tr class="row-good"><td>2.2 DPO Inflation</td><td><span class="badge badge-buy">✅ N/A</span></td><td>No vendor-heavy manufacturing model</td></tr>
+          <tr class="row-good"><td>2.3 Cash Flow Classification</td><td><span class="badge badge-buy">✅ Clean</span></td><td>No factoring/reverse-factoring anomalies found</td></tr>
+          <tr class="row-good"><td>3.1 Non-GAAP Variance</td><td><span class="badge badge-buy">✅ Clean</span></td><td>No material adjusted vs statutory PAT divergence found</td></tr>
+          <tr class="row-good"><td>3.2 M&amp;A Goodwill</td><td><span class="badge badge-buy">✅ Clean</span></td><td>Zero acquisitions in 5 years; zero goodwill on books</td></tr>
+          <tr class="row-good"><td>4.1 Related Party Transaction Gate</td><td><span class="badge badge-buy">✅ Clean</span></td><td>No promoter → no fund diversion risk. MCXCCL transactions are SEBI-overseen clearing corp RPTs.</td></tr>
+          <tr class="row-good"><td>4.2 Auditor Integrity</td><td><span class="badge badge-buy">✅ Clean</span></td><td>Planned SEBI-mandated rotation — not a resignation. Both firms are reputed national CAs.</td></tr>
+          <tr class="row-good"><td>4.3 Contingent Liabilities</td><td><span class="badge badge-buy">✅ Clean</span></td><td>MCXCCL ₹9.97 Cr IT demand (0.35% of net worth — immaterial)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 5: VALUATION ═══ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title">Valuation Analysis</div>
+    </div>
+    <div class="section-desc">
+      MCX is best valued on P/E and P/FCF (not Graham Number, which is for asset-heavy businesses). On FY27 forward P/E basis, the stock is <strong>fairly valued</strong>. On TTM P/E it carries a mild premium. The P/FCF of ~25× (using true maintenance FCF) is actually reasonable for a monopoly exchange with 71% OPM. Reverse DCF shows the market is pricing in ~25-30% PAT growth — which is below MCX's 49% historical 5Y CAGR.
+    </div>
+
+    <h3 class="sub-header">5.1 Relative Valuation</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Metric</th><th>Value (FY26)</th><th>Assessment</th></tr></thead>
+        <tbody>
+          <tr><td>P/E (TTM)</td><td class="num bold">54.1×</td><td>Premium — but ~10% below peer median of ~60×</td></tr>
+          <tr><td>P/B</td><td class="num bold">25.3×</td><td>High — justified by 56%+ ROE (PB/ROE ~0.45, reasonable)</td></tr>
+          <tr class="row-good"><td>P/FCF (true maintenance FCF ~₹2,835 Cr)</td><td class="num bold pos">~25×</td><td><strong>Reasonable for a monopoly exchange with 71% OPM</strong></td></tr>
+          <tr><td>EV/EBITDA (est.)</td><td class="num">~43×</td><td>In line with exchange sector</td></tr>
+          <tr><td>Dividend Yield</td><td class="num">0.21%</td><td>Low — retained capital supports growth (₹8/share FY26)</td></tr>
+          <tr><td>PEG Ratio</td><td class="num">~1.8×</td><td>54× P/E ÷ 30% expected growth — moderate</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-header">5.2 PE-Based Fair Value (Most Relevant)</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Scenario</th><th>FY26 EPS</th><th>FY27E EPS</th><th>Fair P/E</th><th>Fair Value</th><th>vs ₹2,825</th></tr></thead>
+        <tbody>
+          <tr class="row-warn"><td>TTM Trailing (48× FY26)</td><td class="num">₹52.22</td><td>—</td><td>48×</td><td class="num">₹2,507</td><td class="num neg">-11.3%</td></tr>
+          <tr class="row-warn"><td><strong>Conservative Forward (45× FY27E)</strong></td><td class="num">₹52.22</td><td class="num">~₹65</td><td>45×</td><td class="num">₹2,925</td><td class="num pos">+3.5%</td></tr>
+          <tr class="row-good"><td><strong>Base Forward (48× FY27E)</strong></td><td class="num">₹52.22</td><td class="num">~₹65</td><td>48×</td><td class="num bold">₹3,120</td><td class="num pos bold">+10.4%</td></tr>
+          <tr class="row-good"><td>Bull (52× FY27E with upgrades)</td><td class="num">₹52.22</td><td class="num">~₹72</td><td>52×</td><td class="num">₹3,744</td><td class="num pos">+32.5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:11px;color:var(--text-muted);margin-top:-8px">FY27E EPS based on analyst guidance of 27-33% PAT CAGR from FY25-FY28 (Business Standard / DSIJ, May 2026). At 45× forward P/E, the stock has ~3-10% near-term upside.</p>
+
+    <h3 class="sub-header">5.3 Scenario Analysis</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Scenario</th><th>Assumption</th><th>FY28E EPS</th><th>Fair Value Range</th><th>Return from ₹2,825</th></tr></thead>
+        <tbody>
+          <tr class="row-good"><td>🐂 Bull</td><td>PAT CAGR 33%, ADTV maintains growth, new products</td><td class="num">~₹91</td><td class="num">₹4,100–4,500</td><td class="num pos">+45–60%</td></tr>
+          <tr class="row-warn"><td>Base</td><td>PAT CAGR 20-25%, ADTV moderates</td><td class="num">~₹78</td><td class="num">₹3,200–3,500</td><td class="num pos">+13–24%</td></tr>
+          <tr class="row-bad"><td>🐻 Bear</td><td>Commodity correction; ADTV falls 30%</td><td class="num">~₹50</td><td class="num">₹2,000–2,250</td><td class="num neg">-20–29%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 6: TECHNICALS ═══ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div class="section-title">Technical Analysis</div>
+    </div>
+    <div class="section-desc">Source: ms-technicals tool, 9 June 2026. The stock is in a <strong>19% correction from its ₹3,480 high</strong>. Below 20-DMA and 50-DMA (bearish short-term) but above 200-DMA with a Golden Cross maintained (bullish long-term). RSI at 37.97 is approaching oversold — limited near-term downside. For long-term investors, current levels are forming a base.</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <h3 class="sub-header">6.1 Moving Averages &amp; Momentum</h3>
+        <div class="tbl-wrap" style="margin-bottom:0">
+          <table>
+            <thead><tr><th>Indicator</th><th>Value</th><th>Signal</th></tr></thead>
+            <tbody>
+              <tr><td class="bold">CMP</td><td class="num bold">₹2,824.80</td><td></td></tr>
+              <tr class="row-bad"><td>20-DMA</td><td class="num">₹3,128.22</td><td class="neg">Below — short-term ↓</td></tr>
+              <tr class="row-bad"><td>50-DMA</td><td class="num">₹2,930.94</td><td class="neg">Below — medium-term ↓</td></tr>
+              <tr class="row-good"><td>200-DMA</td><td class="num pos">₹2,268.34</td><td class="pos">Above — long-term ↑</td></tr>
+              <tr class="row-good"><td>50/200 Cross</td><td>—</td><td class="pos bold">✅ Golden Cross</td></tr>
+              <tr><td>RSI (14)</td><td class="num">37.97</td><td>Neutral / near oversold</td></tr>
+              <tr class="row-bad"><td>MACD</td><td class="num neg">-51.34</td><td class="neg">Bearish — below signal</td></tr>
+              <tr><td>52W High</td><td class="num">₹3,480</td><td class="neg">-18.8% below</td></tr>
+              <tr><td>52W Low</td><td class="num">₹1,460</td><td class="pos">+93.5% above</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3 class="sub-header">6.2 Support &amp; Resistance</h3>
+        <div class="tbl-wrap" style="margin-bottom:0">
+          <table>
+            <thead><tr><th>Level</th><th>Price</th><th>Basis</th></tr></thead>
+            <tbody>
+              <tr class="row-bad"><td>Resistance 2</td><td class="num neg">₹3,480</td><td>52-Week High</td></tr>
+              <tr class="row-bad"><td>Resistance 1</td><td class="num neg">₹3,364</td><td>Recent swing high</td></tr>
+              <tr style="background:#dbeafe"><td class="bold">→ Current Price</td><td class="num bold" style="color:#1e40af">₹2,825</td><td></td></tr>
+              <tr class="row-warn"><td>Support 1</td><td class="num pos">₹2,397</td><td>Recent swing low</td></tr>
+              <tr class="row-good"><td><strong>Support 2 (Key)</strong></td><td class="num bold pos">₹2,260</td><td><strong>200-DMA zone — strong accumulate here</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3 class="sub-header" style="margin-top:16px">6.3 Technical Verdict</h3>
+        <div class="tbl-wrap" style="margin-bottom:0">
+          <table>
+            <thead><tr><th>Timeframe</th><th>Signal</th><th>Confidence</th></tr></thead>
+            <tbody>
+              <tr class="row-bad"><td>Short-term (1-4 wks)</td><td class="neg bold">Bearish</td><td>Medium</td></tr>
+              <tr class="row-warn"><td>Medium-term (1-6 mo)</td><td>Neutral</td><td>Medium</td></tr>
+              <tr class="row-good"><td>Long-term (6-18 mo)</td><td class="pos bold">Bullish</td><td>High</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 7: PEER COMPARISON ═══ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div class="section-title">Peer Comparison</div>
+    </div>
+    <div class="section-desc">Sources: Screener.in for BSE Ltd (fetched 9 June 2026); MCX data from above. MCX trades at a <strong>17% P/E discount to BSE</strong> despite having higher ROE and ROCE — partly justified by BSE's broader ecosystem diversification. On profitability metrics, MCX wins convincingly.</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Metric</th><th>MCX</th><th>BSE Ltd</th><th>Winner / Assessment</th></tr></thead>
+        <tbody>
+          <tr><td>Market Cap (₹Cr)</td><td class="num">71,895</td><td class="num">1,62,769</td><td>BSE 2.3× larger (more diversified)</td></tr>
+          <tr><td>Revenue FY26 (₹Cr)</td><td class="num">2,302</td><td class="num">4,834</td><td>BSE 2.1× larger</td></tr>
+          <tr><td>Net Profit FY26 (₹Cr)</td><td class="num">1,332</td><td class="num">2,487</td><td>BSE 1.9× larger</td></tr>
+          <tr class="row-good"><td>PAT Margin</td><td class="num bold pos">57.9%</td><td class="num">51.4%</td><td class="pos bold">✅ MCX wins</td></tr>
+          <tr class="row-good"><td>ROE (%)</td><td class="num bold pos">56.3%</td><td class="num">44.8%</td><td class="pos bold">✅ MCX wins by +11.5pp</td></tr>
+          <tr class="row-good"><td>ROCE (%)</td><td class="num bold pos">71.4%</td><td class="num">58.0%</td><td class="pos bold">✅ MCX wins by +13.4pp</td></tr>
+          <tr class="row-good"><td>P/E</td><td class="num bold pos">54.1×</td><td class="num neg">65.5×</td><td class="pos bold">✅ MCX 17% cheaper</td></tr>
+          <tr><td>P/B</td><td class="num">25.3×</td><td class="num">24.4×</td><td>Roughly equal</td></tr>
+          <tr><td>5Y Profit CAGR</td><td class="num">49%</td><td class="num pos">68%</td><td>BSE higher (from lower base)</td></tr>
+          <tr><td>Debt</td><td class="pos">Zero</td><td class="pos">Zero</td><td>Equal</td></tr>
+          <tr><td>Moat type</td><td>Commodity monopoly (narrow/deep)</td><td>Equity/broad ecosystem</td><td>Different risk profiles</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout callout-blue" style="margin-top:0">
+      <span class="callout-icon">💡</span>
+      <span><strong>Key Insight:</strong> MCX trades at a 17% P/E discount to BSE despite superior ROE (+11.5pp) and ROCE (+13.4pp). The discount is partly justified by MCX's gold/silver concentration risk (77% of ADT) vs BSE's revenue diversification. For investors seeking pure commodity market infrastructure exposure, MCX's operating leverage is more directly accessible.</span>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 8: RISKS ═══ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div class="section-title">Risk Assessment</div>
+    </div>
+    <div class="section-desc">MCX's risks are concentrated and clearly identifiable. The single biggest risk is commodity price correction (gold/silver), which directly determines ADT and therefore revenue. FY24 (9% OPM) is the bear case playbook — it happens when volumes collapse.</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Risk</th><th>Probability</th><th>Impact</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr class="row-bad"><td><strong>🥇 Commodity price correction (Gold/Silver -20-30%)</strong></td><td class="neg">Medium</td><td class="neg bold">HIGH</td><td>Gold+Silver = 77% of futures ADT. A bear market in bullion directly reduces ADT value. FY24 (9% OPM) was the last time this happened. This is the single biggest risk.</td></tr>
+          <tr class="row-warn"><td><strong>CTT (Commodity Transaction Tax) hike</strong></td><td>Low-Medium</td><td class="neg">High</td><td>Government can increase CTT, raising per-trade cost. STT increase precedent exists for equity. Any CTT hike reduces trading activity.</td></tr>
+          <tr class="row-warn"><td><strong>Commodity options regulatory restriction</strong></td><td>Low</td><td class="neg">High</td><td>Options are newest/fastest-growing segment (+109% YoY). Any SEBI restriction directly attacks the growth engine.</td></tr>
+          <tr><td><strong>Options volume normalisation</strong></td><td>Medium</td><td>Medium</td><td>Part of FY26 surge may be momentum/price-driven. If gold/silver cools, options ADT normalises. Not a permanent risk but near-term.
+          </td></tr>
+          <tr class="row-good"><td>Technology risk</td><td class="pos">Low (post-Udaan)</td><td>Medium</td><td>T7 platform is battle-tested after FY25-26 scale. Risk significantly lower than FY22-24.</td></tr>
+          <tr class="row-good"><td>Competition (NSE/BSE in commodities)</td><td class="pos">Low</td><td>Medium</td><td>Neither has built meaningful share. Network effects are powerful. Liquidity begets liquidity.</td></tr>
+          <tr><td>No promoter / M&amp;A vulnerability</td><td>Low</td><td>Medium</td><td>No strategic anchor. SEBI oversight provides protection — any acquirer needs SEBI approval for >5% stake in an exchange.</td></tr>
+          <tr class="row-warn"><td>Valuation de-rating risk</td><td>Medium</td><td>Medium</td><td>At 54× P/E, any growth disappointment triggers multiple compression. Bear case is -20-29% from current.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 9: FINAL VERDICT ═══ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <div class="section-title">Final Verdict Scorecard</div>
+    </div>
+
+    <div class="scorecard-grid">
+      <div class="score-card good">
+        <div class="sc-dim">Business Quality &amp; Moat</div>
+        <div class="sc-score">9</div>
+        <div class="sc-weight">Weight: 20% · Contribution: 1.80</div>
+        <div class="sc-note">National monopoly; 71% OPM; extreme operating leverage; network effect moat</div>
+      </div>
+      <div class="score-card good">
+        <div class="sc-dim">Financial Strength</div>
+        <div class="sc-score">9</div>
+        <div class="sc-weight">Weight: 15% · Contribution: 1.35</div>
+        <div class="sc-note">Near-zero debt; CFO 2.28× PAT; fortress balance sheet; ₹2,848 Cr equity</div>
+      </div>
+      <div class="score-card good">
+        <div class="sc-dim">Growth Prospects</div>
+        <div class="sc-score">8</div>
+        <div class="sc-weight">Weight: 20% · Contribution: 1.60</div>
+        <div class="sc-note">Options secular tailwind; institutional participation deepening; near-term cyclicality risk</div>
+      </div>
+      <div class="score-card low">
+        <div class="sc-dim">Valuation</div>
+        <div class="sc-score">5</div>
+        <div class="sc-weight">Weight: 20% · Contribution: 1.00</div>
+        <div class="sc-note">Fairly valued on FY27E forward; 0% margin of safety at ₹2,825; no discount to fair value</div>
+      </div>
+      <div class="score-card fair">
+        <div class="sc-dim">Corporate Governance</div>
+        <div class="sc-score">8</div>
+        <div class="sc-weight">Weight: 15% · Contribution: 1.20</div>
+        <div class="sc-note">No promoter risk; SEBI-regulated MII; clean forensic; MRS = 🟡 Amber → 7-8/10</div>
+      </div>
+      <div class="score-card low">
+        <div class="sc-dim">Technical Setup</div>
+        <div class="sc-score">5</div>
+        <div class="sc-weight">Weight: 10% · Contribution: 0.50</div>
+        <div class="sc-note">Below 20/50 DMA (bearish ST); Golden Cross intact; RSI 37.97 near oversold</div>
+      </div>
+    </div>
+
+    <div class="verdict-banner">
+      <div class="vb-left">
+        <div class="vb-label">Composite Verdict</div>
+        <div class="vb-verdict">HOLD / ACCUMULATE ON DIPS</div>
+        <div class="vb-sub">Best entry zone: ₹2,400–2,600 · Strong buy: below ₹2,200 · Avoid above ₹3,200</div>
+      </div>
+      <div class="vb-right">
+        <div class="vb-score">7.45 / 10</div>
+        <div class="vb-score-label">BUY / HOLD threshold: >6.0</div>
+      </div>
+    </div>
+
+    <h3 class="sub-header">Recommendation Parameters</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Parameter</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Suitable for</td><td>Moderate to Aggressive investors; growth-oriented portfolios seeking commodity market infrastructure exposure</td></tr>
+          <tr><td>Investment horizon</td><td>Minimum 3 years — commodity exchange cycles must be ridden; FY24 showed how violent the trough can be</td></tr>
+          <tr><td>Maximum allocation</td><td>4–6% of equity portfolio (concentrated single-exchange exposure with non-trivial commodity and regulatory risks)</td></tr>
+          <tr class="row-warn"><td><strong>At ₹2,825 (current)</strong></td><td><strong>HOLD existing. No fresh aggressive entry — fairly valued but not cheap. If holding since below ₹2,000, hold firmly.</strong></td></tr>
+          <tr class="row-good"><td>Accumulate zone</td><td>₹2,400–2,600 (200-DMA zone; 15-20% margin of safety on FY27E earnings)</td></tr>
+          <tr class="row-good"><td>Strong Buy zone</td><td>Below ₹2,200 (significant margin of safety; near/below 200-DMA)</td></tr>
+          <tr class="row-bad"><td>Avoid adding</td><td>At or above ₹3,200 (52×+ FY27E P/E; no margin of safety)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Watchlist -->
+    <div class="watchlist-block">
+      <div class="wl-header">
+        <span class="wl-ticker">MCX</span> Watchlist Entry — Active Monitoring
+      </div>
+      <div class="tbl-wrap" style="border:none;border-radius:0;box-shadow:none;margin-bottom:0">
+        <table>
+          <thead><tr><th>Alert Type</th><th>Trigger Level</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr class="row-good"><td>Strong Accumulate</td><td class="num pos bold">₹2,200–2,400</td><td>Add aggressively (near/at 200-DMA)</td></tr>
+            <tr class="row-good"><td>Accumulate</td><td class="num pos">₹2,400–2,600</td><td>Gradual buying in tranches</td></tr>
+            <tr class="row-warn"><td>Hold Zone (Current)</td><td class="num">₹2,600–3,100</td><td>Hold — do not add or trim</td></tr>
+            <tr class="row-warn"><td>Trim 25-30%</td><td class="num">Above ₹3,400</td><td>Book partial profits near 52W high</td></tr>
+            <tr class="row-bad"><td>Stop-Loss Review</td><td class="num neg">Below ₹2,100</td><td>S2 support broken — review thesis immediately</td></tr>
+            <tr class="row-bad"><td>Fundamental Alert</td><td>Monthly ADTV falls 20%+ MoM for 3 months</td><td>Re-evaluate entire growth thesis</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h3 class="sub-header" style="margin-top:20px">What to Monitor</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Frequency</th><th>Metric</th><th>Why It Matters</th></tr></thead>
+        <tbody>
+          <tr><td>Monthly</td><td>ADTV (futures + options premium ADT)</td><td>Direct revenue driver; MCX publishes monthly data</td></tr>
+          <tr><td>Monthly</td><td>Gold/silver international price levels</td><td>77% of futures ADT tied to bullion price levels</td></tr>
+          <tr><td>Quarterly</td><td>OPM and PAT growth vs ADTV growth</td><td>Operating leverage check; cost control signal</td></tr>
+          <tr><td>Quarterly</td><td>Options premium ADT as % of total revenue</td><td>Quality mix — options are higher-quality revenue per unit</td></tr>
+          <tr><td>Quarterly</td><td>Active client count (UCCs traded)</td><td>Participation depth; critical for sustainability beyond price cycles</td></tr>
+          <tr><td>On event</td><td>CTT notifications from Finance Ministry</td><td>Tax policy can swing exchange economics significantly</td></tr>
+          <tr><td>On event</td><td>SEBI regulatory changes on commodity derivatives</td><td>New product approvals or restrictions</td></tr>
+          <tr><td>On event</td><td>Kotak Mahindra Bank 15% stake changes</td><td>Largest holder; any sale creates near-term overhang</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-red" style="margin-top:12px">
+      <span class="callout-icon">🔴</span>
+      <div>
+        <strong>Thesis Breakers — Would Force Re-evaluation to AVOID:</strong><br>
+        • Gold/silver prices falling &gt;30% for 2+ consecutive quarters with no ADT recovery<br>
+        • CTT increase making commodity derivatives uneconomical vs equity derivatives<br>
+        • SEBI restriction on commodity options (directly attacks fastest-growing segment)<br>
+        • Technology platform failure causing extended trading halt (reputational + regulatory)
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════════ FOOTER ═══ -->
+<footer class="report-footer">
+  <div class="disclaimer-title">⚠ Important Disclaimer</div>
+  <p>This report is generated for <strong>educational and personal research purposes only</strong> and does <strong>NOT</strong> constitute financial advice, investment advice, or a solicitation to buy or sell any security. Equity investments are subject to market risks. Past performance does not guarantee future results.</p>
+  <p style="margin-top:6px">All financial figures (CMP, P/E, EPS, ROE, ROCE, ADTV, shareholding percentages, 52-week ranges, moving averages) were fetched <strong>live from Screener.in, NSE India, Trendlyne, and equivalent public portals on 9 June 2026</strong> using the Market Sage toolset. No LLM training data was used for any quantitative figure. Figures may change materially after this date — verify all data independently from primary sources before making any investment decision.</p>
+  <p style="margin-top:6px">LIC of India shareholding is <strong>not</strong> cited as a governance signal in this report — per explicit analytical policy. Only private domestic institutional holdings are treated as governance-relevant signals.</p>
+  <p style="margin-top:6px">Please consult a <strong>SEBI-registered investment advisor</strong> before making any investment decisions. The analyst has no position in MCX as of the report date.</p>
+  <p style="margin-top:10px;color:#64748b;font-size:10px">Generated by Market Sage · Anthropic Claude Sonnet 4.6 · 9 June 2026 · Data sources: Screener.in, NSE India, Trendlyne, Business Standard, MCX IR, Multibagg.ai, ICICIDIRECT Research</p>
+</footer>
+
+</body>
+</html>
